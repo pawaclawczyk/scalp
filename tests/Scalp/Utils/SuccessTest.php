@@ -242,6 +242,47 @@ class SuccessTest extends TestCase
         $this->assertEquals(Failure(new UnsupportedOperationException('Success::failed')), $this->success->failed());
     }
 
+    /** @test */
+    public function transform_will_apply_success_function_to_value_from_this(): void
+    {
+        $s = function (int $x): TryCatch {
+            return Success($x * $x);
+        };
+        $f = function (): TryCatch {
+            throw new \RuntimeException('Failure function should never be called');
+        };
+
+        $this->assertEquals(Success(1764), $this->success->transform($s, $f));
+    }
+
+    /** @test */
+    public function transform_will_return_failure_with_new_error_when_success_function_throws_an_error(): void
+    {
+        $s = function (): TryCatch {
+            throw new \RuntimeException('Error from success function');
+        };
+        $f = function (): TryCatch {
+            throw new \RuntimeException('Failure function should never be called');
+        };
+
+        $this->assertEquals(Failure(new \RuntimeException('Error from success function')), $this->success->transform($s, $f));
+    }
+
+    /** @test */
+    public function transform_requires_success_function_to_return_try_catch(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        $s = function (int $x): int {
+            return $x * $x;
+        };
+        $f = function (): TryCatch {
+            throw new \RuntimeException('Failure function should never be called');
+        };
+
+        $this->success->transform($s, $f);
+    }
+
     protected function setUp(): void
     {
         $this->success = Success(42);

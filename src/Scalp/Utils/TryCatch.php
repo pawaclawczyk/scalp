@@ -185,7 +185,7 @@ abstract class TryCatch
      *
      * def transform[U](s: T => Try[U], f: Throwable => Try[U]): Try[U]
      */
-//    abstract public function transform(callable $s, callable $f): TryCatch;
+    abstract public function transform(callable $s, callable $f): TryCatch;
 
     /*
      * Returns `Left` with `Throwable` if this is a `Failure`, otherwise returns `Right` with `Success` value.

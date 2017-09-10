@@ -208,6 +208,47 @@ class FailureTest extends TestCase
         $this->assertEquals(Success(new \DomainException(self::DOMAIN_EXCEPTION_MESSAGE)), $this->failure->failed());
     }
 
+    /** @test */
+    public function transform_will_apply_failure_function_to_value_from_this(): void
+    {
+        $s = function (): TryCatch {
+            throw new \RuntimeException('Success function should never be called');
+        };
+        $f = function (\Throwable $error): TryCatch {
+            return Success($error->getMessage());
+        };
+
+        $this->assertEquals(Success(self::DOMAIN_EXCEPTION_MESSAGE), $this->failure->transform($s, $f));
+    }
+
+    /** @test */
+    public function transform_will_return_failure_with_new_error_when_failure_function_throws_an_error(): void
+    {
+        $s = function (): TryCatch {
+            throw new \RuntimeException('Success function should never be called');
+        };
+        $f = function (\Throwable $error): TryCatch {
+            throw new \RuntimeException('Error from failure function');
+        };
+
+        $this->assertEquals(Failure(new \RuntimeException('Error from failure function')), $this->failure->transform($s, $f));
+    }
+
+    /** @test */
+    public function transform_requires_failure_function_to_return_try_catch(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        $s = function (): TryCatch {
+            throw new \RuntimeException('Success function should never be called');
+        };
+        $f = function (\Throwable $error): string {
+            return $error->getMessage();
+        };
+
+        $this->failure->transform($s, $f);
+    }
+
     protected function setUp(): void
     {
         $this->failure = Failure(new \DomainException(self::DOMAIN_EXCEPTION_MESSAGE));

@@ -93,6 +93,11 @@ final class Success extends TryCatch
         return Failure(new UnsupportedOperationException('Success::failed'));
     }
 
+    public function transform(callable $s, callable $f): TryCatch
+    {
+        return $this->flatMap($s);
+    }
+
     public function __toString(): string
     {
         return sprintf(

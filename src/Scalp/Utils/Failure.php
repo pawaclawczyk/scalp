@@ -87,6 +87,11 @@ final class Failure extends TryCatch
         return Success($this->error);
     }
 
+    public function transform(callable $s, callable $f): TryCatch
+    {
+        return $this->recoverWith($f);
+    }
+
     public function __toString(): string
     {
         return sprintf('Failure[%s]("%s")', get_class($this->error), $this->error->getMessage());
