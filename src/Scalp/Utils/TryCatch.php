@@ -94,10 +94,10 @@ abstract class TryCatch
      *
      * def collect[U](pf: PartialFunction[T, U]): Try[U]
      *
-     * @param callable $f
+     * @param PartialFunction $f
      * @return TryCatch
      */
-//    abstract public function collect(callable $f): TryCatch;
+//    abstract public function collect(PartialFunction $pf): TryCatch;
 
     /*
      * Converts this to a `Failure` if the predicate is not satisfied.
@@ -128,9 +128,9 @@ abstract class TryCatch
      * [@]inline final def withFilter(p: T => Boolean): WithFilter = new WithFilter(p)
      *
      * @param callable $p
-     * @return TryCatch
+     * @return WithFilter
      */
-//    abstract public function withFilter(callable $p): TryCatch;
+//    abstract public function withFilter(callable $p): WithFilter;
 
     /*
      * Applies the given function `f` if this is a `Failure`, otherwise returns this if this is a `Success`.
@@ -138,10 +138,10 @@ abstract class TryCatch
      *
      * def recoverWith[U >: T](@deprecatedName('f) pf: PartialFunction[Throwable, Try[U]]): Try[U]
      *
-     * @param callable $pf
+     * @param PartialFunction $pf
      * @return TryCatch
      */
-//    abstract public function recoverWith(callable $pf): TryCatch;
+//    abstract public function recoverWith(PartialFunction $pf): TryCatch;
 
     /*
      * Applies the given function `f` if this is a `Failure`, otherwise returns this if this is a `Success`.
@@ -149,10 +149,10 @@ abstract class TryCatch
      *
      * def recover[U >: T](@deprecatedName('f) pf: PartialFunction[Throwable, U]): Try[U]
      *
-     * @param callable $pf
+     * @param PartialFunction $pf
      * @return TryCatch
      */
-//    abstract public function recover(callable $pf): TryCatch;
+//    abstract public function recover(PartialFunction $pf): TryCatch;
 
     /*
      * Returns `None` if this is a `Failure` or a `Some` containing the value if this is a `Success`.
