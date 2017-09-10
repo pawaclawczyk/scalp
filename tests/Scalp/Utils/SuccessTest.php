@@ -211,6 +211,16 @@ class SuccessTest extends TestCase
         $this->assertEquals($this->success, $this->success->recoverWith($pf));
     }
 
+    /** @test */
+    public function recover_will_return_this(): void
+    {
+        $pf = function (\Throwable $error): string {
+            return $error->getMessage();
+        };
+
+        $this->assertEquals($this->success, $this->success->recover($pf));
+    }
+
     protected function setUp(): void
     {
         $this->success = Success(42);

@@ -68,6 +68,15 @@ final class Failure extends TryCatch
         }
     }
 
+    public function recover(callable $pf): TryCatch
+    {
+        try {
+            return Success($pf($this->error));
+        } catch (\Throwable $error) {
+            return Failure($error);
+        }
+    }
+
     public function __toString(): string
     {
         return sprintf('Failure[%s]("%s")', get_class($this->error), $this->error->getMessage());

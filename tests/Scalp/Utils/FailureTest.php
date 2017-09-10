@@ -135,7 +135,7 @@ class FailureTest extends TestCase
     }
 
     /** @test */
-    public function recover_with_will_will_return_failure_with_new_error_when_recover_function_throws_an_error(): void
+    public function recover_with_will_return_failure_with_new_error_when_recover_function_throws_an_error(): void
     {
         $pf = function (\Throwable $error): TryCatch {
             throw new \RuntimeException('Error from recover function');
@@ -145,6 +145,39 @@ class FailureTest extends TestCase
 
         $this->assertInstanceOf(Failure::class, $result);
         $this->assertEquals('Failure[RuntimeException]("Error from recover function")', (string) $result);
+    }
+
+    /** @test */
+    public function recover_will_call_function_with_value_from_this_and_return_in_success(): void
+    {
+        $pf = function (\Throwable $error): string {
+            return $error->getMessage();
+        };
+
+        $this->assertEquals(Success(self::DOMAIN_EXCEPTION_MESSAGE), $this->failure->recover($pf));
+    }
+
+    /** @test */
+    public function recover_will_return_failure_with_new_error_when_recover_function_throws_an_error(): void
+    {
+        $pf = function (\Throwable $error): string {
+            throw new \RuntimeException('Error from recover function');
+        };
+
+        $result = $this->failure->recover($pf);
+
+        $this->assertInstanceOf(Failure::class, $result);
+        $this->assertEquals('Failure[RuntimeException]("Error from recover function")', (string) $result);
+    }
+
+    /** @test */
+    public function recover_will_call_function_returning_success_and_return_nested_success_type(): void
+    {
+        $pf = function (\Throwable $error): TryCatch {
+            return Success('Error from recover function');
+        };
+
+        $this->assertEquals(Success(Success('Error from recover function')), $this->failure->recover($pf));
     }
 
     protected function setUp(): void

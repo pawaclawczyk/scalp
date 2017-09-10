@@ -75,6 +75,11 @@ final class Success extends TryCatch
         return $this;
     }
 
+    public function recover(callable $pf): TryCatch
+    {
+        return $this;
+    }
+
     public function __toString(): string
     {
         return sprintf(

@@ -154,6 +154,7 @@ abstract class TryCatch
      * @return TryCatch
      */
 //    abstract public function recover(PartialFunction $pf): TryCatch;
+    abstract public function recover(callable $pf): TryCatch;
 
     /*
      * Returns `None` if this is a `Failure` or a `Some` containing the value if this is a `Success`.
