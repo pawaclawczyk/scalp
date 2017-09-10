@@ -87,21 +87,6 @@ class SuccessTest extends TestCase
     }
 
     /** @test */
-    public function classic_example_with_dividing_by_zero(): void
-    {
-        $divisor = Success(0);
-        $dividend = Success(42);
-
-        $result = $dividend->flatMap(function ($x) use ($divisor): TryCatch {
-            return $divisor->flatMap(function ($y) use ($x): TryCatch {
-                return Success($x / $y);
-            });
-        });
-
-        $this->assertInstanceOf(Failure::class, $result);
-    }
-
-    /** @test */
     public function map_will_call_function_with_value_from_this_within_try_catch(): void
     {
         $function = function (int $x): int { return $x * $x; };

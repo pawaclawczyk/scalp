@@ -3,6 +3,7 @@
 $finder = PhpCsFixer\Finder::create()
     ->exclude('somedir')
     ->in([
+        "example",
         "src",
         "tests",
     ])
