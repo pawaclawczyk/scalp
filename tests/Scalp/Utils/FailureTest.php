@@ -202,6 +202,12 @@ class FailureTest extends TestCase
         $this->assertEquals($this->failure, $this->failure->flatten());
     }
 
+    /** @test */
+    public function failed_will_return_value_from_this_wrapped_in_success(): void
+    {
+        $this->assertEquals(Success(new \DomainException(self::DOMAIN_EXCEPTION_MESSAGE)), $this->failure->failed());
+    }
+
     protected function setUp(): void
     {
         $this->failure = Failure(new \DomainException(self::DOMAIN_EXCEPTION_MESSAGE));

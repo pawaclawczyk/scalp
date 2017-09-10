@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scalp\Tests\Utils;
 
+use Scalp\Exception\UnsupportedOperationException;
 use function Scalp\Utils\Failure;
 use Scalp\Utils\Failure;
 use Scalp\Utils\Success;
@@ -233,6 +234,12 @@ class SuccessTest extends TestCase
         $failure = Failure(new \RuntimeException());
 
         $this->assertEquals($failure, Success(Success(Success($failure)))->flatten());
+    }
+
+    /** @test */
+    public function failed_will_return_failure_With_unsupported_operation_exception(): void
+    {
+        $this->assertEquals(Failure(new UnsupportedOperationException('Success::failed')), $this->success->failed());
     }
 
     protected function setUp(): void

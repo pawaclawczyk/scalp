@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scalp\Utils;
 
 use Scalp\Exception\NoSuchElementException;
+use Scalp\Exception\UnsupportedOperationException;
 
 final class Success extends TryCatch
 {
@@ -85,6 +86,11 @@ final class Success extends TryCatch
         return ($this->value instanceof TryCatch)
             ? $this->value->flatten()
             : $this;
+    }
+
+    public function failed(): TryCatch
+    {
+        return Failure(new UnsupportedOperationException('Success::failed'));
     }
 
     public function __toString(): string

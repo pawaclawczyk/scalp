@@ -177,7 +177,7 @@ abstract class TryCatch
      *
      * def failed: Try[Throwable]
      */
-//    abstract public function failed(): TryCatch;
+    abstract public function failed(): TryCatch;
 
     /*
      * Completes this `Try` by applying the function `f` to this if this is of type `Failure`, or conversely, by applying
