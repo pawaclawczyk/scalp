@@ -22,9 +22,11 @@
             "Scalp\\Tests\\": "tests/Scalp/"
         }
     },
+    "require": {
+        "php": "~7.1"
+    },
     "require-dev": {
         "symfony/var-dumper": "^3.3",
-        "phpunit/phpunit": "~6.2.4",
-        "friendsofphp/php-cs-fixer": "^2.5"
+        "phpunit/phpunit": "~6.2.4"
     }
 }

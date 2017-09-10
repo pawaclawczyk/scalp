@@ -28,6 +28,20 @@ final class Failure extends TryCatch
         return $default;
     }
 
+    public function orElse(TryCatch $default): TryCatch
+    {
+        return $default;
+    }
+
+    public function get(): void
+    {
+        throw $this->error;
+    }
+
+    public function foreach(callable $f): void
+    {
+    }
+
     public function flatMap(callable $f): TryCatch
     {
         return $this;
@@ -36,6 +50,51 @@ final class Failure extends TryCatch
     public function map(callable $f): TryCatch
     {
         return $this;
+    }
+
+    public function filter(callable $p): TryCatch
+    {
+        return $this;
+    }
+
+    public function recoverWith(callable $pf): TryCatch
+    {
+        restrictCallableReturnType($pf, TryCatch::class);
+
+        try {
+            return $pf($this->error);
+        } catch (\Throwable $error) {
+            return Failure($error);
+        }
+    }
+
+    public function recover(callable $pf): TryCatch
+    {
+        try {
+            return Success($pf($this->error));
+        } catch (\Throwable $error) {
+            return Failure($error);
+        }
+    }
+
+    public function flatten(): TryCatch
+    {
+        return $this;
+    }
+
+    public function failed(): TryCatch
+    {
+        return Success($this->error);
+    }
+
+    public function transform(callable $s, callable $f): TryCatch
+    {
+        return $this->recoverWith($f);
+    }
+
+    public function fold(callable $fa, callable $fb)
+    {
+        return $fa($this->error);
     }
 
     public function __toString(): string

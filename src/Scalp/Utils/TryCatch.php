@@ -46,16 +46,16 @@ abstract class TryCatch
      *
      * @return TryCatch
      */
-//    abstract public function orElse(TryCatch $default): TryCatch;
+    abstract public function orElse(TryCatch $default): TryCatch;
 
     /**
      * Returns the value from this `Success` or throws the exception if this is a `Failure`.
      *
      * def get: T
      *
-     * @return T
+     * @return mixed
      */
-//    abstract public function get();
+    abstract public function get();
 
     /**
      * Applies the given function `f` if this is a `Success`, otherwise returns `Unit` if this is a `Failure`.
@@ -66,7 +66,7 @@ abstract class TryCatch
      *
      * @param callable $f
      */
-//    abstract public function foreach(callable $f): void;
+    abstract public function foreach(callable $f): void;
 
     /**
      * Returns the given function applied to the value from this `Success` or returns this if this is a `Failure`.
@@ -94,10 +94,10 @@ abstract class TryCatch
      *
      * def collect[U](pf: PartialFunction[T, U]): Try[U]
      *
-     * @param callable $f
+     * @param PartialFunction $f
      * @return TryCatch
      */
-//    abstract public function collect(callable $f): TryCatch;
+//    abstract public function collect(PartialFunction $pf): TryCatch;
 
     /*
      * Converts this to a `Failure` if the predicate is not satisfied.
@@ -107,7 +107,7 @@ abstract class TryCatch
      * @param callable $p
      * @return TryCatch
      */
-//    abstract public function filter(callable $p): TryCatch;
+    abstract public function filter(callable $p): TryCatch;
 
     /* Creates a non-strict filter, which eventually converts this to a `Failure`
      *  if the predicate is not satisfied.
@@ -128,9 +128,9 @@ abstract class TryCatch
      * [@]inline final def withFilter(p: T => Boolean): WithFilter = new WithFilter(p)
      *
      * @param callable $p
-     * @return TryCatch
+     * @return WithFilter
      */
-//    abstract public function withFilter(callable $p): TryCatch;
+//    abstract public function withFilter(callable $p): WithFilter;
 
     /*
      * Applies the given function `f` if this is a `Failure`, otherwise returns this if this is a `Success`.
@@ -138,10 +138,11 @@ abstract class TryCatch
      *
      * def recoverWith[U >: T](@deprecatedName('f) pf: PartialFunction[Throwable, Try[U]]): Try[U]
      *
-     * @param callable $pf
+     * @param PartialFunction $pf
      * @return TryCatch
      */
-//    abstract public function recoverWith(callable $pf): TryCatch;
+//    abstract public function recoverWith(PartialFunction $pf): TryCatch;
+    abstract public function recoverWith(callable $pf): TryCatch;
 
     /*
      * Applies the given function `f` if this is a `Failure`, otherwise returns this if this is a `Success`.
@@ -149,10 +150,11 @@ abstract class TryCatch
      *
      * def recover[U >: T](@deprecatedName('f) pf: PartialFunction[Throwable, U]): Try[U]
      *
-     * @param callable $pf
+     * @param PartialFunction $pf
      * @return TryCatch
      */
-//    abstract public function recover(callable $pf): TryCatch;
+//    abstract public function recover(PartialFunction $pf): TryCatch;
+    abstract public function recover(callable $pf): TryCatch;
 
     /*
      * Returns `None` if this is a `Failure` or a `Some` containing the value if this is a `Success`.
@@ -167,7 +169,7 @@ abstract class TryCatch
      *
      * def flatten[U](implicit ev: T <:< Try[U]): Try[U]
      */
-//    abstract public function flatten(): TryCatch;
+    abstract public function flatten(): TryCatch;
 
     /*
      * Inverts this `Try`. If this is a `Failure`, returns its exception wrapped in a `Success`.
@@ -175,7 +177,7 @@ abstract class TryCatch
      *
      * def failed: Try[Throwable]
      */
-//    abstract public function failed(): TryCatch;
+    abstract public function failed(): TryCatch;
 
     /*
      * Completes this `Try` by applying the function `f` to this if this is of type `Failure`, or conversely, by applying
@@ -183,7 +185,7 @@ abstract class TryCatch
      *
      * def transform[U](s: T => Try[U], f: Throwable => Try[U]): Try[U]
      */
-//    abstract public function transform(callable $s, callable $f): TryCatch;
+    abstract public function transform(callable $s, callable $f): TryCatch;
 
     /*
      * Returns `Left` with `Throwable` if this is a `Failure`, otherwise returns `Right` with `Success` value.
@@ -207,5 +209,5 @@ abstract class TryCatch
      *
      * def fold[U](fa: Throwable => U, fb: T => U): U
      */
-//    abstract public function fold(callable $fa, callable $fb);
+    abstract public function fold(callable $fa, callable $fb);
 }
