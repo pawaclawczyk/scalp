@@ -28,6 +28,16 @@ final class Failure extends TryCatch
         return $default;
     }
 
+    public function orElse(TryCatch $default): TryCatch
+    {
+        return $default;
+    }
+
+    public function get(): void
+    {
+        throw $this->error;
+    }
+
     public function flatMap(callable $f): TryCatch
     {
         return $this;

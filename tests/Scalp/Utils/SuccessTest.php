@@ -51,6 +51,18 @@ class SuccessTest extends TestCase
     }
 
     /** @test */
+    public function or_else_will_return_this(): void
+    {
+        $this->assertEquals($this->success, $this->success->orElse(Success(13)));
+    }
+
+    /** @test */
+    public function get_will_return_value_from_this(): void
+    {
+        $this->assertEquals(42, $this->success->get());
+    }
+
+    /** @test */
     public function flat_map_will_call_function_with_value_from_this_and_return_result(): void
     {
         $function = function (int $x): TryCatch { return Success($x * $x); };

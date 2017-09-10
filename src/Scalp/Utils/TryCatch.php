@@ -46,16 +46,16 @@ abstract class TryCatch
      *
      * @return TryCatch
      */
-//    abstract public function orElse(TryCatch $default): TryCatch;
+    abstract public function orElse(TryCatch $default): TryCatch;
 
     /**
      * Returns the value from this `Success` or throws the exception if this is a `Failure`.
      *
      * def get: T
      *
-     * @return T
+     * @return mixed
      */
-//    abstract public function get();
+    abstract public function get();
 
     /**
      * Applies the given function `f` if this is a `Success`, otherwise returns `Unit` if this is a `Failure`.

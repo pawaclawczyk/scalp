@@ -50,6 +50,30 @@ class FailureTest extends TestCase
     }
 
     /** @test */
+    public function or_else_will_return_default(): void
+    {
+        $this->assertEquals(Success('default'), $this->failure->orElse(Success('default')));
+    }
+
+    /** @test */
+    public function or_else_require_default_to_try_catch(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        $this->failure->orElse('default');
+    }
+
+    /** @test */
+    public function get_throws_error_from_this(): void
+    {
+        try {
+            $this->failure->get();
+        } catch (\DomainException $error) {
+            $this->assertEquals('An error occurred.', $error->getMessage());
+        }
+    }
+
+    /** @test */
     public function flat_map_will_return_this(): void
     {
         $function = function (int $x): TryCatch { return Success($x * $x); };
@@ -67,7 +91,7 @@ class FailureTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->failure = Failure(new \DomainException());
+        $this->failure = Failure(new \DomainException('An error occurred.'));
 
         parent::setUp();
     }

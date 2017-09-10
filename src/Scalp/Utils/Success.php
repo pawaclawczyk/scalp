@@ -28,6 +28,16 @@ final class Success extends TryCatch
         return $this->value;
     }
 
+    public function orElse(TryCatch $default): TryCatch
+    {
+        return $this;
+    }
+
+    public function get()
+    {
+        return $this->value;
+    }
+
     public function flatMap(callable $f): TryCatch
     {
         restrictCallableReturnType($f, TryCatch::class);
