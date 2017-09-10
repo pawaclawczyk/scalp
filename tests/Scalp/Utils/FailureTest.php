@@ -249,6 +249,20 @@ class FailureTest extends TestCase
         $this->failure->transform($s, $f);
     }
 
+    /** @test */
+    public function fold_will_call_first_function_with_value_from_this(): void
+    {
+        $fa = function (\Throwable $error): string {
+            return $error->getMessage();
+        };
+
+        $fb = function (): void {
+            throw new \RuntimeException('Second function should never be called');
+        };
+
+        $this->assertEquals(self::DOMAIN_EXCEPTION_MESSAGE, $this->failure->fold($fa, $fb));
+    }
+
     protected function setUp(): void
     {
         $this->failure = Failure(new \DomainException(self::DOMAIN_EXCEPTION_MESSAGE));

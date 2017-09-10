@@ -98,6 +98,15 @@ final class Success extends TryCatch
         return $this->flatMap($s);
     }
 
+    public function fold(callable $fa, callable $fb)
+    {
+        try {
+            return $fb($this->value);
+        } catch (\Throwable $error) {
+            return $fa($error);
+        }
+    }
+
     public function __toString(): string
     {
         return sprintf(

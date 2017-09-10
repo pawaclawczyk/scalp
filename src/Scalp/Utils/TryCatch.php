@@ -209,5 +209,5 @@ abstract class TryCatch
      *
      * def fold[U](fa: Throwable => U, fb: T => U): U
      */
-//    abstract public function fold(callable $fa, callable $fb);
+    abstract public function fold(callable $fa, callable $fb);
 }

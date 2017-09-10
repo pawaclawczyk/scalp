@@ -283,6 +283,34 @@ class SuccessTest extends TestCase
         $this->success->transform($s, $f);
     }
 
+    /** @test */
+    public function fold_will_call_second_function_with_value_from_this(): void
+    {
+        $fa = function (): void {
+            throw new \RuntimeException('First function should never be called');
+        };
+
+        $fb = function (int $x): int {
+            return $x * $x;
+        };
+
+        $this->assertEquals(1764, $this->success->fold($fa, $fb));
+    }
+
+    /** @test */
+    public function fold_will_call_second_function_then_first_if_the_second_throws_an_error(): void
+    {
+        $fa = function (\Throwable $error): string {
+            return $error->getMessage();
+        };
+
+        $fb = function (): void {
+            throw new \RuntimeException('Error from second function');
+        };
+
+        $this->assertEquals('Error from second function', $this->success->fold($fa, $fb));
+    }
+
     protected function setUp(): void
     {
         $this->success = Success(42);
