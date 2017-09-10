@@ -1,9 +1,7 @@
 language: php
 php:
-    - '7.0'
     - '7.1'
     - '7.2'
 install: composer install
 script:
-    - vendor/bin/php-cs-fixer fix --dry-run
     - vendor/bin/phpunit tests
