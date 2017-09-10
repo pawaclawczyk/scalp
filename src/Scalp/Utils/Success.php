@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scalp\Utils;
 
+use Scalp\Exception\NoSuchElementException;
+
 final class Success extends TryCatch
 {
     private $value;
@@ -57,6 +59,15 @@ final class Success extends TryCatch
     public function map(callable $f): TryCatch
     {
         return TryCatch(Delayed($f, $this->value));
+    }
+
+    public function filter(callable $p): TryCatch
+    {
+        try {
+            return ($p($this->value)) ? $this : Failure(new NoSuchElementException("Predicate does not hold for {$this->value}"));
+        } catch (\Throwable $error) {
+            return Failure($error);
+        }
     }
 
     public function __toString(): string

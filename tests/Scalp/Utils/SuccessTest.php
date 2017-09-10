@@ -165,6 +165,42 @@ class SuccessTest extends TestCase
         );
     }
 
+    /** @test */
+    public function filter_will_return_this_when_predicate_is_satisfied(): void
+    {
+        $predicate = function (): bool {
+            return true;
+        };
+
+        $this->assertEquals($this->success, $this->success->filter($predicate));
+    }
+
+    /** @test */
+    public function filter_will_return_failure_with_no_such_element_exception_when_predicate_is_not_satisfied(): void
+    {
+        $predicate = function (): bool {
+            return false;
+        };
+
+        $result = $this->success->filter($predicate);
+
+        $this->assertInstanceOf(Failure::class, $result);
+        $this->assertEquals('Failure[Scalp\Exception\NoSuchElementException]("Predicate does not hold for 42")', (string) $result);
+    }
+
+    /** @test */
+    public function filter_will_return_failure_with_when_predicate_throws_error(): void
+    {
+        $predicate = function (): bool {
+            throw new \RuntimeException('Error from predicate');
+        };
+
+        $result = $this->success->filter($predicate);
+
+        $this->assertInstanceOf(Failure::class, $result);
+        $this->assertEquals('Failure[RuntimeException]("Error from predicate")', (string) $result);
+    }
+
     protected function setUp(): void
     {
         $this->success = Success(42);

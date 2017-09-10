@@ -100,6 +100,16 @@ class FailureTest extends TestCase
         $this->assertEquals($this->failure, $this->failure->map($function));
     }
 
+    /** @test */
+    public function filter_will_return_this(): void
+    {
+        $predicate = function (): bool {
+            return true;
+        };
+
+        $this->assertEquals($this->failure, $this->failure->filter($predicate));
+    }
+
     protected function setUp(): void
     {
         $this->failure = Failure(new \DomainException('An error occurred.'));

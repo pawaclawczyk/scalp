@@ -52,6 +52,11 @@ final class Failure extends TryCatch
         return $this;
     }
 
+    public function filter(callable $p): TryCatch
+    {
+        return $this;
+    }
+
     public function __toString(): string
     {
         return sprintf('Failure[%s]("%s")', get_class($this->error), $this->error->getMessage());

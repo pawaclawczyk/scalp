@@ -107,7 +107,7 @@ abstract class TryCatch
      * @param callable $p
      * @return TryCatch
      */
-//    abstract public function filter(callable $p): TryCatch;
+    abstract public function filter(callable $p): TryCatch;
 
     /* Creates a non-strict filter, which eventually converts this to a `Failure`
      *  if the predicate is not satisfied.
