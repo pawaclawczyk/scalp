@@ -201,6 +201,16 @@ class SuccessTest extends TestCase
         $this->assertEquals('Failure[RuntimeException]("Error from predicate")', (string) $result);
     }
 
+    /** @test */
+    public function recover_with_will_return_this(): void
+    {
+        $pf = function (\Throwable $error): TryCatch {
+            return Success($error->getMessage());
+        };
+
+        $this->assertEquals($this->success, $this->success->recoverWith($pf));
+    }
+
     protected function setUp(): void
     {
         $this->success = Success(42);

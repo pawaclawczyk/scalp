@@ -13,6 +13,8 @@ use Scalp\Utils\TryCatch;
 
 class FailureTest extends TestCase
 {
+    private const DOMAIN_EXCEPTION_MESSAGE = 'Domain exception error message';
+
     /** @var Failure */
     private $failure;
 
@@ -69,7 +71,7 @@ class FailureTest extends TestCase
         try {
             $this->failure->get();
         } catch (\DomainException $error) {
-            $this->assertEquals('An error occurred.', $error->getMessage());
+            $this->assertEquals(self::DOMAIN_EXCEPTION_MESSAGE, $error->getMessage());
         }
     }
 
@@ -110,9 +112,44 @@ class FailureTest extends TestCase
         $this->assertEquals($this->failure, $this->failure->filter($predicate));
     }
 
+    /** @test */
+    public function recover_with_will_call_function_with_value_from_this_and_return_result(): void
+    {
+        $pf = function (\Throwable $error): TryCatch {
+            return Success($error->getMessage());
+        };
+
+        $this->assertEquals(Success(self::DOMAIN_EXCEPTION_MESSAGE), $this->failure->recoverWith($pf));
+    }
+
+    /** @test */
+    public function recover_with_function_must_return_try_catch(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        $pf = function (\Throwable $error): string {
+            return $error->getMessage();
+        };
+
+        $this->failure->recoverWith($pf);
+    }
+
+    /** @test */
+    public function recover_with_will_will_return_failure_with_new_error_when_recover_function_throws_an_error(): void
+    {
+        $pf = function (\Throwable $error): TryCatch {
+            throw new \RuntimeException('Error from recover function');
+        };
+
+        $result = $this->failure->recoverWith($pf);
+
+        $this->assertInstanceOf(Failure::class, $result);
+        $this->assertEquals('Failure[RuntimeException]("Error from recover function")', (string) $result);
+    }
+
     protected function setUp(): void
     {
-        $this->failure = Failure(new \DomainException('An error occurred.'));
+        $this->failure = Failure(new \DomainException(self::DOMAIN_EXCEPTION_MESSAGE));
 
         parent::setUp();
     }
