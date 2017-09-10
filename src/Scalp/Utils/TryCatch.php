@@ -169,7 +169,7 @@ abstract class TryCatch
      *
      * def flatten[U](implicit ev: T <:< Try[U]): Try[U]
      */
-//    abstract public function flatten(): TryCatch;
+    abstract public function flatten(): TryCatch;
 
     /*
      * Inverts this `Try`. If this is a `Failure`, returns its exception wrapped in a `Success`.

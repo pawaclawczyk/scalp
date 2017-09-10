@@ -180,6 +180,28 @@ class FailureTest extends TestCase
         $this->assertEquals(Success(Success('Error from recover function')), $this->failure->recover($pf));
     }
 
+    /** @test */
+    public function it_cannot_contain_failure(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        Failure(Failure(new \RuntimeException()));
+    }
+
+    /** @test */
+    public function it_cannot_contain_success(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        Failure(Success(42));
+    }
+
+    /** @test */
+    public function flatten_will_return_this(): void
+    {
+        $this->assertEquals($this->failure, $this->failure->flatten());
+    }
+
     protected function setUp(): void
     {
         $this->failure = Failure(new \DomainException(self::DOMAIN_EXCEPTION_MESSAGE));

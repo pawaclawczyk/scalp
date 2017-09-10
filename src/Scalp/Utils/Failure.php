@@ -77,6 +77,11 @@ final class Failure extends TryCatch
         }
     }
 
+    public function flatten(): TryCatch
+    {
+        return $this;
+    }
+
     public function __toString(): string
     {
         return sprintf('Failure[%s]("%s")', get_class($this->error), $this->error->getMessage());

@@ -221,6 +221,20 @@ class SuccessTest extends TestCase
         $this->assertEquals($this->success, $this->success->recover($pf));
     }
 
+    /** @test */
+    public function flatten_will_reduce_all_success_nesting_levels_to_one(): void
+    {
+        $this->assertEquals(Success('ok'), Success(Success(Success(Success('ok'))))->flatten());
+    }
+
+    /** @test */
+    public function flatten_will_return_nested_failure(): void
+    {
+        $failure = Failure(new \RuntimeException());
+
+        $this->assertEquals($failure, Success(Success(Success($failure)))->flatten());
+    }
+
     protected function setUp(): void
     {
         $this->success = Success(42);

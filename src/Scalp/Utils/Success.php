@@ -80,6 +80,13 @@ final class Success extends TryCatch
         return $this;
     }
 
+    public function flatten(): TryCatch
+    {
+        return ($this->value instanceof TryCatch)
+            ? $this->value->flatten()
+            : $this;
+    }
+
     public function __toString(): string
     {
         return sprintf(
