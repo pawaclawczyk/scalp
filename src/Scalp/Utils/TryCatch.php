@@ -66,7 +66,7 @@ abstract class TryCatch
      *
      * @param callable $f
      */
-//    abstract public function foreach(callable $f): void;
+    abstract public function foreach(callable $f): void;
 
     /**
      * Returns the given function applied to the value from this `Success` or returns this if this is a `Failure`.

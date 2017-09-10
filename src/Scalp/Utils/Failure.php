@@ -38,6 +38,10 @@ final class Failure extends TryCatch
         throw $this->error;
     }
 
+    public function foreach(callable $f): void
+    {
+    }
+
     public function flatMap(callable $f): TryCatch
     {
         return $this;

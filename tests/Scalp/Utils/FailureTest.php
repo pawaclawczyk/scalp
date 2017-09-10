@@ -74,6 +74,17 @@ class FailureTest extends TestCase
     }
 
     /** @test */
+    public function foreach_does_nothing(): void
+    {
+        $function = new RememberCall();
+
+        $result = $this->failure->foreach($function);
+
+        $this->assertNull($result);
+        $this->assertNull($function->calledWith());
+    }
+
+    /** @test */
     public function flat_map_will_return_this(): void
     {
         $function = function (int $x): TryCatch { return Success($x * $x); };

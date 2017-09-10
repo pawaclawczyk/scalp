@@ -38,6 +38,11 @@ final class Success extends TryCatch
         return $this->value;
     }
 
+    public function foreach(callable $f): void
+    {
+        $f($this->value);
+    }
+
     public function flatMap(callable $f): TryCatch
     {
         restrictCallableReturnType($f, TryCatch::class);

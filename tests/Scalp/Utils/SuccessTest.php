@@ -63,6 +63,29 @@ class SuccessTest extends TestCase
     }
 
     /** @test */
+    public function foreach_does_applies_function(): void
+    {
+        $function = new RememberCall();
+
+        $result = $this->success->foreach($function);
+
+        $this->assertNull($result);
+        $this->assertEquals(42, $function->calledWith());
+    }
+
+    /** @test */
+    public function foreach_does_not_return_result(): void
+    {
+        $function = function (int $x): int {
+            return $x * $x;
+        };
+
+        $result = $this->success->foreach($function);
+
+        $this->assertNull($result);
+    }
+
+    /** @test */
     public function flat_map_will_call_function_with_value_from_this_and_return_result(): void
     {
         $function = function (int $x): TryCatch { return Success($x * $x); };
