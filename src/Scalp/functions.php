@@ -22,6 +22,23 @@ namespace Scalp\Conversion {
     }
 }
 
+namespace Scalp {
+    function None()
+    {
+        return new None();
+    }
+
+    function Some($x): Some
+    {
+        return new Some($x);
+    }
+
+    function Option($x): Option
+    {
+        return ($x === null) ? None() : Some($x);
+    }
+}
+
 namespace Scalp\Utils {
     function Delayed(callable $functionOrCodeBlock, ...$args): Delayed
     {
