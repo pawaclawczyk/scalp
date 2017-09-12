@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scalp\Conversion;
 
+use function Scalp\Utils\type;
+
 final class AnyToString
 {
     public function __invoke($any): string
@@ -30,24 +32,23 @@ final class AnyToString
 
     private function valueToString($value): string
     {
-        if ($value === null) {
-            return 'null';
+        $conversion = $this->implicitConversionFor($value);
+
+        return  ($conversion !== '')
+            ? $conversion($value)
+            : (string) $value;
+    }
+
+    private function implicitConversionFor($any): string
+    {
+        $conversion = type($any).'ToString';
+
+        foreach (get_defined_functions()['user'] as $function) {
+            if (preg_match("/\\\\$conversion\$/i", $function)) {
+                return $function;
+            }
         }
 
-        if ($value === true) {
-            return 'true';
-        }
-
-        if ($value === false) {
-            return 'false';
-        }
-
-        if (is_array($value)) {
-            $valuesAsString = implode(', ', array_map(AnyToString, $value));
-
-            return "Array($valuesAsString)";
-        }
-
-        return (string) $value;
+        return '';
     }
 }

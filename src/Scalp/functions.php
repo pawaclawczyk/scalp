@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace {
+    require_once __DIR__.'/Conversion/implicit_conversion.php';
+}
+
 namespace Scalp\Conversion {
     const AnyToString = __NAMESPACE__.'\AnyToString';
 
