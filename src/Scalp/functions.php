@@ -2,6 +2,21 @@
 
 declare(strict_types=1);
 
+namespace Scalp\Conversion {
+    const AnyToString = __NAMESPACE__.'\AnyToString';
+
+    function AnyToString($any): string
+    {
+        static $anyToString = null;
+
+        if ($anyToString === null) {
+            $anyToString = new AnyToString();
+        }
+
+        return $anyToString($any);
+    }
+}
+
 namespace Scalp\Utils {
     function Delayed(callable $functionOrCodeBlock, ...$args): Delayed
     {
