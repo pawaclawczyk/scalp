@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scalp\Tests\Utils;
 
 use Scalp\Exception\UnsupportedOperationException;
+use Scalp\Tests\Conversion\ExampleWithoutConversionToString;
 use function Scalp\Utils\Failure;
 use Scalp\Utils\Failure;
 use Scalp\Utils\Success;
@@ -309,6 +310,18 @@ class SuccessTest extends TestCase
         };
 
         $this->assertEquals('Error from second function', $this->success->fold($fa, $fb));
+    }
+
+    /** @test */
+    public function it_converts_self_to_string_when_contains_object_that_cannot_be_converted_to_string(): void
+    {
+        $exampleWithoutConversionToString = new ExampleWithoutConversionToString();
+        $objectHashId = spl_object_hash($exampleWithoutConversionToString);
+
+        $this->assertEquals(
+            "Success[Scalp\Tests\Conversion\ExampleWithoutConversionToString]($objectHashId)",
+            Success($exampleWithoutConversionToString)
+        );
     }
 
     protected function setUp(): void

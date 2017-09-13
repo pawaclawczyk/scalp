@@ -6,6 +6,7 @@ namespace Scalp\Utils;
 
 use Scalp\Exception\NoSuchElementException;
 use Scalp\Exception\UnsupportedOperationException;
+use function Scalp\Conversion\AnyToString;
 
 final class Success extends TryCatch
 {
@@ -112,7 +113,7 @@ final class Success extends TryCatch
         return sprintf(
             'Success[%s](%s)',
             type($this->value),
-            (string) $this->value
+            AnyToString($this->value)
         );
     }
 }
