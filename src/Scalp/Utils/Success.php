@@ -7,6 +7,7 @@ namespace Scalp\Utils;
 use Scalp\Exception\NoSuchElementException;
 use Scalp\Exception\UnsupportedOperationException;
 use function Scalp\Conversion\AnyToString;
+use function Scalp\Type\restrictCallableReturnType;
 
 final class Success extends TryCatch
 {
