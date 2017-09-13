@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scalp\Utils;
 
+use function Scalp\Type\restrictCallableReturnType;
+
 final class Failure extends TryCatch
 {
     private $error;

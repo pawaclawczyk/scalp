@@ -20,7 +20,10 @@
     "autoload-dev": {
         "psr-4": {
             "Scalp\\Tests\\": "tests/Scalp/"
-        }
+        },
+        "files": [
+            "tests/Scalp/functions.php"
+        ]
     },
     "require": {
         "php": "~7.1"

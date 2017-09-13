@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {
     require_once __DIR__.'/Conversion/implicit_conversion.php';
+    require_once __DIR__.'/Type/restrictions.php';
 }
 
 namespace Scalp\Conversion {
@@ -59,18 +60,5 @@ namespace Scalp\Utils {
         return $actual === $expected
                 || is_subclass_of($actual, $expected, true)
             ;
-    }
-
-    function restrictCallableReturnType(callable $callable, string $expectedType): void
-    {
-        $rf = new \ReflectionFunction($callable);
-
-        $valid = $rf->hasReturnType()
-            ? checkType($rf->getReturnType()->getName(), $expectedType)
-            : false;
-
-        if (!$valid) {
-            throw new \TypeError("Return value of callable must be defined and must have type $expectedType.");
-        }
     }
 }
