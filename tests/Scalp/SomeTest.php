@@ -114,4 +114,96 @@ class SomeTest extends TestCase
     {
         $this->assertEquals(None(), Some(Some(Some(None())))->flatten());
     }
+
+    /** @test */
+    public function filter_returns_this_when_predicate_is_fulfilled(): void
+    {
+        $p = function (): bool {
+            return true;
+        };
+
+        $this->assertEquals(Some(42), Some(42)->filter($p));
+    }
+
+    /** @test */
+    public function filter_returns_none_when_predicate_is_not_fulfilled(): void
+    {
+        $p = function (): bool {
+            return false;
+        };
+
+        $this->assertEquals(None(), Some(42)->filter($p));
+    }
+
+    /** @test */
+    public function filter_not_returns_this_when_predicate_is_not_fulfilled(): void
+    {
+        $p = function (): bool {
+            return false;
+        };
+
+        $this->assertEquals(Some(42), Some(42)->filterNot($p));
+    }
+
+    /** @test */
+    public function filter_not_returns_none_when_predicate_is_fulfilled(): void
+    {
+        $p = function (): bool {
+            return true;
+        };
+
+        $this->assertEquals(None(), Some(42)->filterNot($p));
+    }
+
+    /** @test */
+    public function contains_returns_true_when_contains_element(): void
+    {
+        $this->assertTrue(Some(42)->contains(42));
+    }
+
+    /** @test */
+    public function contains_returns_false_when_does_not_contain_element(): void
+    {
+        $this->assertFalse(Some(42)->contains(13));
+    }
+
+    /** @test */
+    public function exists_returns_true_when_predicate_is_fulfilled(): void
+    {
+        $p = function (): bool {
+            return true;
+        };
+
+        $this->assertTrue(Some(42)->exists($p));
+    }
+
+    /** @test */
+    public function exists_returns_false_when_predicate_is_not_fulfilled(): void
+    {
+        $p = function (): bool {
+            return false;
+        };
+
+        $this->assertFalse(Some(42)->exists($p));
+    }
+
+    /** @test */
+    public function forall_returns_true_when_predicate_is_satisfied(): void
+    {
+        $p = function (): bool {
+            return true;
+        };
+
+        $this->assertTrue(Some(42)->forall($p));
+    }
+
+    /** @test */
+    public function forall_returns_false_when_predicate_is_not_satisfied(): void
+    {
+        $p = function (): bool {
+            return false;
+        };
+
+        $this->assertFalse(Some(42)->forall($p));
+    }
 }

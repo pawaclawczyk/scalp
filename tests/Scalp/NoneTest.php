@@ -111,4 +111,50 @@ class NoneTest extends TestCase
     {
         $this->assertEquals(None(), None()->flatten());
     }
+
+    /** @test */
+    public function filter_returns_this(): void
+    {
+        $p = function (): bool {
+            return true;
+        };
+
+        $this->assertEquals(None(), None()->filter($p));
+    }
+
+    /** @test */
+    public function filter_not_returns_this(): void
+    {
+        $p = function (): bool {
+            return false;
+        };
+
+        $this->assertEquals(None(), None()->filterNot($p));
+    }
+
+    /** @test */
+    public function contains_returns_false(): void
+    {
+        $this->assertFalse(None()->contains(42));
+    }
+
+    /** @test */
+    public function exists_returns_false(): void
+    {
+        $p = function (): bool {
+            return true;
+        };
+
+        $this->assertFalse(None()->exists($p));
+    }
+
+    /** @test */
+    public function forall_returns_true(): void
+    {
+        $p = function (): bool {
+            return false;
+        };
+
+        $this->assertTrue(None()->forall($p));
+    }
 }

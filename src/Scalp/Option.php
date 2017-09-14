@@ -48,4 +48,29 @@ abstract class Option
     {
         return $this->isDefined() && ($this->get() instanceof self) ? $this->get()->flatten() : $this;
     }
+
+    final public function filter(callable $p): Option
+    {
+        return ($this->isEmpty() || $p($this->get())) ? $this : None();
+    }
+
+    final public function filterNot(callable $p): Option
+    {
+        return ($this->isEmpty() || !$p($this->get())) ? $this : None();
+    }
+
+    final public function contains($elem): bool
+    {
+        return !$this->isEmpty() && $this->get() === $elem;
+    }
+
+    final public function exists(callable $p): bool
+    {
+        return !$this->isEmpty() && $p($this->get());
+    }
+
+    final public function forall(callable $p): bool
+    {
+        return $this->isEmpty() || $p($this->get());
+    }
 }
