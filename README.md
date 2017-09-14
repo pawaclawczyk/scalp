@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/pawaclawczyk/scalp.svg?branch=master)](https://travis-ci.org/pawaclawczyk/scalp)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pawaclawczyk/scalp/badges/quality-score.png)](https://scrutinizer-ci.com/g/pawaclawczyk/scalp/)
+
 Scalp
 ======
 
