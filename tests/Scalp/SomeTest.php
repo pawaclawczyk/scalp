@@ -206,4 +206,47 @@ class SomeTest extends TestCase
 
         $this->assertFalse(Some(42)->forall($p));
     }
+
+    /** @test */
+    public function foreach_applies_function_to_value_from_this(): void
+    {
+        $remember = new RememberCall();
+
+        Some(42)->foreach($remember);
+
+        $this->assertEquals(42, $remember->calledWith());
+    }
+
+    /** @test */
+    public function foreach_does_not_return_value(): void
+    {
+        $f = function (int $x): int {
+            return $x;
+        };
+
+        $this->assertNull(Some(42)->foreach($f));
+    }
+
+    /** @test */
+    public function or_else_returns_this(): void
+    {
+        $this->assertEquals(Some(42), Some(42)->orElse(Some(13)));
+    }
+
+    /** @test */
+    public function iterator_returns_single_value_iterator(): void
+    {
+        $it = Some(42)->iterator();
+
+        $this->assertInstanceOf(\Iterator::class, $it);
+
+        $counter = 0;
+
+        foreach ($it as $v) {
+            $counter = $counter + 1;
+            $this->assertEquals(42, $v);
+        }
+
+        $this->assertEquals(1, $counter);
+    }
 }

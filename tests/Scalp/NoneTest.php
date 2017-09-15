@@ -157,4 +157,36 @@ class NoneTest extends TestCase
 
         $this->assertTrue(None()->forall($p));
     }
+
+    /** @test */
+    public function foreach_does_not_apply_function(): void
+    {
+        $remember = new RememberCall();
+
+        None()->foreach($remember);
+
+        $this->assertNull($remember->calledWith());
+    }
+
+    /** @test */
+    public function or_else_returns_alternative(): void
+    {
+        $this->assertEquals(Some(42), None()->orElse(Some(42)));
+    }
+
+    /** @test */
+    public function iterator_returns_empty_iterator(): void
+    {
+        $it = None()->iterator();
+
+        $this->assertInstanceOf(\EmptyIterator::class, $it);
+
+        $counter = 0;
+
+        foreach ($it as $v) {
+            $counter = $counter + 1;
+        }
+
+        $this->assertEquals(0, $counter);
+    }
 }

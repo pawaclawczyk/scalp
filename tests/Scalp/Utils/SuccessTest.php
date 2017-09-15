@@ -6,6 +6,7 @@ namespace Scalp\Tests\Utils;
 
 use Scalp\Exception\UnsupportedOperationException;
 use Scalp\Tests\Conversion\ExampleWithoutConversionToString;
+use Scalp\Tests\RememberCall;
 use function Scalp\Utils\Failure;
 use Scalp\Utils\Failure;
 use Scalp\Utils\Success;

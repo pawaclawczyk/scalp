@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scalp\Tests\Utils;
 
+use Scalp\Tests\RememberCall;
 use Scalp\Utils\Failure;
 use function Scalp\Utils\Failure;
 use PHPUnit\Framework\TestCase;

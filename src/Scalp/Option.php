@@ -73,4 +73,40 @@ abstract class Option
     {
         return $this->isEmpty() || $p($this->get());
     }
+
+    final public function foreach(callable $f): void
+    {
+        $this->isEmpty() ?: $f($this->get());
+    }
+
+    /**
+     * This method should be implemented with PartialFunction
+     * It should return the result of applying `pf` if it's
+     * defined at option's value, None in other case.
+     * In scala pf: PartialFunction[A,B] is lifted into A => Option[B].
+     *
+     * @param callable $pf
+     *
+     * @return Option
+     */
+    final public function collect(callable $pf): Option
+    {
+        return $this->flatMap($pf);
+    }
+
+    final public function orElse(Option $alternative): Option
+    {
+        return $this->isEmpty() ? $alternative : $this;
+    }
+
+    final public function iterator(): \Iterator
+    {
+        return $this->isEmpty() ? new \EmptyIterator() : new \ArrayIterator([$this->get()]);
+    }
+
+    /*
+     * final public function toList(): List
+     * final public function toRight($left)
+     * final public function toLeft($right)
+     */
 }
