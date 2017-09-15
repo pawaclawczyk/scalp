@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scalp\Tests\Utils;
 
+use function Scalp\None;
 use Scalp\Tests\RememberCall;
 use Scalp\Utils\Failure;
 use function Scalp\Utils\Failure;
@@ -179,6 +180,12 @@ class FailureTest extends TestCase
         };
 
         $this->assertEquals(Success(Success('Error from recover function')), $this->failure->recover($pf));
+    }
+
+    /** @test */
+    public function to_option_returns_none(): void
+    {
+        $this->assertEquals(None(), Failure(new \RuntimeException())->toOption());
     }
 
     /** @test */

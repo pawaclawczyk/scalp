@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scalp\Tests\Utils;
 
 use Scalp\Exception\UnsupportedOperationException;
+use function Scalp\Some;
 use Scalp\Tests\Conversion\ExampleWithoutConversionToString;
 use Scalp\Tests\RememberCall;
 use function Scalp\Utils\Failure;
@@ -222,6 +223,12 @@ class SuccessTest extends TestCase
         };
 
         $this->assertEquals($this->success, $this->success->recover($pf));
+    }
+
+    /** @test */
+    public function to_option_returns_some_with_value_from_this(): void
+    {
+        $this->assertEquals(Some(42), Success(42)->toOption());
     }
 
     /** @test */

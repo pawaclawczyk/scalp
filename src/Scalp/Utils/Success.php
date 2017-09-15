@@ -7,6 +7,8 @@ namespace Scalp\Utils;
 use Scalp\Exception\NoSuchElementException;
 use Scalp\Exception\UnsupportedOperationException;
 use function Scalp\Conversion\AnyToString;
+use Scalp\Option;
+use function Scalp\Some;
 use function Scalp\Type\restrictCallableReturnType;
 
 final class Success extends TryCatch
@@ -81,6 +83,11 @@ final class Success extends TryCatch
     public function recover(callable $pf): TryCatch
     {
         return $this;
+    }
+
+    public function toOption(): Option
+    {
+        return Some($this->get());
     }
 
     public function flatten(): TryCatch
