@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Scalp;
 
+use function Scalp\Conversion\AnyToString;
 use function Scalp\Type\restrictCallableReturnType;
+use function Scalp\Utils\type;
 
 abstract class Option
 {
@@ -109,4 +111,14 @@ abstract class Option
      * final public function toRight($left)
      * final public function toLeft($right)
      */
+
+    final public function toString(): string
+    {
+        return $this->isEmpty() ? 'None' : sprintf('Some[%s](%s)', type($this->get()), AnyToString($this->get()));
+    }
+
+    final public function __toString(): string
+    {
+        return $this->toString();
+    }
 }

@@ -189,4 +189,11 @@ class NoneTest extends TestCase
 
         $this->assertEquals(0, $counter);
     }
+
+    /** @test */
+    public function it_converts_to_string(): void
+    {
+        $this->assertEquals('None', None()->toString());
+        $this->assertEquals('None', (string) None());
+    }
 }

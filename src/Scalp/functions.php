@@ -7,23 +7,15 @@ namespace {
     require_once __DIR__.'/Type/restrictions.php';
 }
 
-namespace Scalp\Conversion {
-    const AnyToString = __NAMESPACE__.'\AnyToString';
-
-    function AnyToString($any): string
-    {
-        static $anyToString = null;
-
-        if ($anyToString === null) {
-            $anyToString = new AnyToString();
-        }
-
-        return $anyToString($any);
-    }
-}
-
 namespace Scalp {
-    function None()
+    use function Scalp\Conversion\AnyToString;
+
+    function println($x): void
+    {
+        echo AnyToString($x)."\n";
+    }
+
+    function None(): None
     {
         return new None();
     }
@@ -36,6 +28,21 @@ namespace Scalp {
     function Option($x): Option
     {
         return ($x === null) ? None() : Some($x);
+    }
+}
+
+namespace Scalp\Conversion {
+    const AnyToString = __NAMESPACE__.'\AnyToString';
+
+    function AnyToString($any): string
+    {
+        static $anyToString = null;
+
+        if ($anyToString === null) {
+            $anyToString = new AnyToString();
+        }
+
+        return $anyToString($any);
     }
 }
 

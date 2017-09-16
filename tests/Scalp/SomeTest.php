@@ -68,7 +68,7 @@ class SomeTest extends TestCase
     }
 
     /** @test */
-    public function fold_applies_function_ant_returns_result(): void
+    public function fold_applies_function_and_returns_result(): void
     {
         $ifEmpty = function (): int {
             return 13;
@@ -82,7 +82,7 @@ class SomeTest extends TestCase
     }
 
     /** @test */
-    public function flat_map_applies_function_ant_returns_result(): void
+    public function flat_map_applies_function_and_returns_result(): void
     {
         $f = function (int $x): Option {
             return Some($x ** 2);
@@ -248,5 +248,12 @@ class SomeTest extends TestCase
         }
 
         $this->assertEquals(1, $counter);
+    }
+
+    /** @test */
+    public function it_converts_to_string(): void
+    {
+        $this->assertEquals('Some[integer](42)', Some(42)->toString());
+        $this->assertEquals('Some[integer](42)', (string) Some(42));
     }
 }
