@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scalp\Utils;
 
+use Scalp\Option;
+
 abstract class TryCatch
 {
     /**
@@ -161,7 +163,7 @@ abstract class TryCatch
      *
      * def toOption: Option[T]
      */
-//    abstract public function toOption(): Option;
+    abstract public function toOption(): Option;
 
     /*
      * Transforms a nested `Try`, ie, a `Try` of type `Try[Try[T]]`,

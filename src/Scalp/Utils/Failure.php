@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scalp\Utils;
 
+use function Scalp\None;
+use Scalp\Option;
 use function Scalp\Type\restrictCallableReturnType;
 
 final class Failure extends TryCatch
@@ -77,6 +79,11 @@ final class Failure extends TryCatch
         } catch (\Throwable $error) {
             return Failure($error);
         }
+    }
+
+    public function toOption(): Option
+    {
+        return None();
     }
 
     public function flatten(): TryCatch

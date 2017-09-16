@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scalp\Tests\Utils;
+namespace Scalp\Tests;
 
 final class RememberCall
 {

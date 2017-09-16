@@ -4,6 +4,70 @@
 Scalp
 ======
 
+## Scalp
+### Option
+The `Option` type represents optional value. It can be either `Some` value or `None`.
+
+```php
+function divide(int $x, int $y): Option
+{
+    return $y === 0 ? None() : Some(intdiv($x, $y));
+}
+
+println(divide(42, 6));
+println(divide(42, 0));
+```
+
+```bash
+Some[int](7)
+None
+```
+
+`Option` can be used as collection with `map`, `flatMap` or `filter`.
+
+ ```php
+$option = Option(42);
+
+$square = function (int $x): int {
+    return $x ** 2;
+};
+
+println($option->map($square));
+
+$isOdd = function (int $x): bool {
+    return $x % 2 === 1;
+};
+
+println($option->filter($isOdd));
+
+$squareRoot = function (int $x): Option {
+    return $x >= 0 ? Some(sqrt($x)) : None();
+};
+
+println($option->flatMap($squareRoot));
+ ```
+
+```bash
+Some[integer](1764)
+None
+Some[double](6.4807406984079)
+```
+
+Computation performed on `Some` can also be performed on `None` without any side effect. The only difference is that
+the result is always `None`.
+
+```php
+println(None()->map($square));
+println(None()->filter($isOdd));
+println(None()->flatMap($squareRoot));
+```
+
+```bash
+None
+None
+None
+```
+
 ## Scalp\Conversion
 ### AnyToString
 Converts any type to string. In case of value type looks for implicit conversion function and if not found casts to value string. 
