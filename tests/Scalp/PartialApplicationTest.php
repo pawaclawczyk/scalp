@@ -118,4 +118,17 @@ final class PartialApplicationTest extends TestCase
 
         $partiallyAppliedF(3);
     }
+
+    /** @test */
+    public function it_throws_bad_function_call_exception_when_not_all_required_arguments_are_placeholders_or_values(): void
+    {
+        $f = function (int $x, int $y): int {
+            return $x + $y;
+        };
+
+        $this->expectException(\BadFunctionCallException::class);
+        $this->expectExceptionMessage('Number of passed arguments is less than required arguments. Use `__` const to add placeholder or value to apply.');
+
+        papply($f, __);
+    }
 }
