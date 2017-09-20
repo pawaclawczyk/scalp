@@ -29,6 +29,13 @@ namespace Scalp {
     {
         return ($x === null) ? None() : Some($x);
     }
+
+    const __ = '$argument$';
+
+    function papply(callable $f, ...$args): callable
+    {
+        return new PartialApplication($f, $args);
+    }
 }
 
 namespace Scalp\Conversion {
