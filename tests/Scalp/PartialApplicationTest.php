@@ -86,7 +86,7 @@ final class PartialApplicationTest extends TestCase
     }
 
     /** @test */
-    public function it_partially_applies_object_method_method(): void
+    public function it_partially_applies_object_method(): void
     {
         $object = new class() {
             public function add(int $x, int $y): int
