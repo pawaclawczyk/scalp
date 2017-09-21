@@ -68,6 +68,30 @@ None
 None
 ```
 
+### Partial Function Application
+Partial function application lets to apply some of arguments immediately required by function, while rest of them can be applied later.
+
+```php
+$isEven = function (int $x): bool {
+    return $x % 2 === 0;
+};
+
+$filterEven = papply(array_filter, __, $isEven);
+
+println(AnyToString(
+    $filterEven([-2, -1, 0, 1, 2])
+));
+
+println(AnyToString(
+    $filterEven([11, 13, 17, 19])
+));
+```
+
+```bash
+Array(-2, 0, 2)
+Array()
+```
+
 ## Scalp\Conversion
 ### AnyToString
 Converts any type to string. In case of value type looks for implicit conversion function and if not found casts to value string. 
