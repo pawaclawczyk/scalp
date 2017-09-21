@@ -16,4 +16,11 @@ namespace Scalp\Tests\Type {
     {
         return 42;
     }
+
+    const sum = __NAMESPACE__.'\sum';
+
+    function sum(int $x, int $y): int
+    {
+        return $x + $y;
+    }
 }
