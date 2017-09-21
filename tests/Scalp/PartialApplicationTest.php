@@ -131,4 +131,32 @@ final class PartialApplicationTest extends TestCase
 
         papply($f, __);
     }
+
+    /** @test */
+    public function it_does_not_require_variadic_arguments(): void
+    {
+        $f = function (int ...$v): int {
+            return array_sum($v);
+        };
+
+        $partiallyAppliedF = papply($f);
+
+        $this->assertEquals(0, $f());
+        $this->assertEquals(0, $partiallyAppliedF());
+    }
+
+    /** @test */
+    public function it_enforces_to_pass_variadic_arguments_when_placeholders_are_defined(): void
+    {
+        $f = function (int ...$v): int {
+            return array_sum($v);
+        };
+
+        $partiallyAppliedF = papply($f, __, __);
+
+        $this->expectException(\BadFunctionCallException::class);
+        $this->expectExceptionMessage('Partially applied function has 2 missing arguments at position: 1, 2.');
+
+        $partiallyAppliedF();
+    }
 }
