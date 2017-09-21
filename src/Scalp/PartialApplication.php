@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scalp;
 
+use function Scalp\Reflection\reflectionFunction;
+
 final class PartialApplication
 {
     private $f;
@@ -70,7 +72,7 @@ final class PartialApplication
 
     private function countRequiredArguments(callable $f): int
     {
-        $rf = $this->reflectionFunction($f);
+        $rf = reflectionFunction($f);
 
         [$count, $required] = array_reduce($rf->getParameters(), function (array $carry, \ReflectionParameter $parameter): array {
             $count = $carry[0] + 1;
@@ -85,22 +87,5 @@ final class PartialApplication
     private function placeholderArguments(array $arguments): array
     {
         return array_filter($arguments, function ($arg): bool { return $arg === __; });
-    }
-
-    private function reflectionFunction(callable $f): \ReflectionFunctionAbstract
-    {
-        if (is_object($f)) {
-            return (new \ReflectionObject($f))->getMethod('__invoke');
-        }
-
-        if (is_array($f) && is_string($f[0])) {
-            return (new \ReflectionClass($f[0]))->getMethod($f[1]);
-        }
-
-        if (is_array($f) && is_object($f[0])) {
-            return (new \ReflectionObject($f[0]))->getMethod($f[1]);
-        }
-
-        return new \ReflectionFunction($f);
     }
 }

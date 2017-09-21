@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {
     require_once __DIR__.'/Conversion/implicit_conversion.php';
+    require_once __DIR__.'/Reflection/functions.php';
     require_once __DIR__.'/Type/restrictions.php';
 }
 
