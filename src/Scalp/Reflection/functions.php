@@ -9,14 +9,29 @@ namespace Scalp\Reflection {
             return (new \ReflectionObject($f))->getMethod('__invoke');
         }
 
-        if (is_array($f) && is_string($f[0]) && is_string($f[1])) {
+        if (isClassStaticMethodCall($f)) {
             return (new \ReflectionClass($f[0]))->getMethod($f[1]);
         }
 
-        if (is_array($f) && is_object($f[0]) && is_string($f[1])) {
+        if (isObjectMethodCall($f)) {
             return (new \ReflectionObject($f[0]))->getMethod($f[1]);
         }
 
         return new \ReflectionFunction($f);
+    }
+
+    function isClassStaticMethodCall(callable $f): bool
+    {
+        return isMethodCall($f) && is_string($f[0]);
+    }
+
+    function isObjectMethodCall(callable $f): bool
+    {
+        return isMethodCall($f) && is_object($f[0]);
+    }
+
+    function isMethodCall(callable $f): bool
+    {
+        return is_array($f) && is_string($f[1]);
     }
 }
