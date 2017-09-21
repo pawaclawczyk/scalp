@@ -69,7 +69,7 @@ None
 ```
 
 ### Partial Function Application
-Partial function application lets to apply some of arguments immediately required by function, while rest of them can be applied later.
+Partial function application lets to apply some of function arguments immediately, while rest of them can be applied later.
 
 ```php
 $isEven = function (int $x): bool {
