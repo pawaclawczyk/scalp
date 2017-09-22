@@ -13,9 +13,9 @@ namespace Scalp\PatternMatching {
         return new Any();
     }
 
-    function Val(): Val
+    function Value($value): Value
     {
-        return new Val();
+        return new Value($value);
     }
 
     function Type(string $type, ...$args): Type

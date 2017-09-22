@@ -53,7 +53,7 @@ final class UnresolvedMatchSubjectTest extends TestCase
     public function it_throws_pattern_matching_subject_not_found_when_none_pattern_matches_subject(): void
     {
         $this->expectException(PatternMatchingSubjectNotFound::class);
-        $this->expectExceptionMessage('Patter matching subject "42" is not defined in this match expression".');
+        $this->expectExceptionMessage('Pattern matching subject "42" is not defined in this match expression".');
 
         (new UnresolvedMatchSubject(42))
             ->done();

@@ -17,7 +17,7 @@ return PhpCsFixer\Config::create()
         '@PHP70Migration' => true,
         '@PHP71Migration' => true,
         '@PHP71Migration:risky' => true,
-        'strict_comparison' => true,
+        'strict_comparison' => false,
         'strict_param' => true,
         'array_syntax' => ['syntax' => 'short'],
     ])

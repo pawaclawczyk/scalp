@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 use function Scalp\Some;
 use Scalp\Some;
 use function Scalp\PatternMatching\Any;
+use Scalp\None;
 
 final class TypeTest extends TestCase
 {
@@ -29,6 +30,14 @@ final class TypeTest extends TestCase
             Type(Subject::class)
                 ->match(new Subject(1, 2, 3))
         );
+    }
+
+    /** @test */
+    public function it_matches_value_by_primitive_type(): void
+    {
+        $this->assertInstanceOf(Some::class, Type('integer')->match(42));
+
+        $this->assertInstanceOf(None::class, Type('integer')->match('42'));
     }
 
     /** @test */

@@ -7,6 +7,8 @@ namespace Scalp\PatternMatching;
 use function Scalp\None;
 use Scalp\Option;
 use function Scalp\Some;
+use function Scalp\Utils\checkType;
+use function Scalp\Utils\type;
 
 final class Type extends Pattern
 {
@@ -21,16 +23,18 @@ final class Type extends Pattern
 
     public function match($x): Option
     {
-        if (!$x instanceof CaseClass) {
-            throw new \RuntimeException('Argument must be CaseClass');
-        }
+        $type = type($x);
 
-        if (!$x instanceof $this->type) {
+        if (!checkType($type, $this->type)) {
             return None();
         }
 
         if (empty($this->patterns)) {
             return Some([]);
+        }
+
+        if (!$x instanceof CaseClass) {
+            throw new \RuntimeException('Argument must be CaseClass');
         }
 
         $arguments = $x->deconstruct();
