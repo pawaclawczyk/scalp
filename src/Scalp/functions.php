@@ -19,6 +19,8 @@ namespace Scalp {
         return $x;
     }
 
+    const println = __NAMESPACE__.'\println';
+
     function println($x): void
     {
         echo AnyToString($x)."\n";

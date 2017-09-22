@@ -37,7 +37,9 @@ final class PartialApplication
                 ? $argsIterator->current()
                 : $arg;
 
-            $argsIterator->next();
+            if ($replacement !== $arg) {
+                $argsIterator->next();
+            }
 
             return $replacement;
         };
