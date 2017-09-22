@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace {
     require_once __DIR__.'/Conversion/implicit_conversion.php';
+    require_once __DIR__.'/PatternMatching/functions.php';
     require_once __DIR__.'/Reflection/functions.php';
     require_once __DIR__.'/Type/restrictions.php';
 }
 
 namespace Scalp {
     use function Scalp\Conversion\AnyToString;
+
+    const identity = __NAMESPACE__.'\identity';
+
+    function identity($x)
+    {
+        return $x;
+    }
 
     function println($x): void
     {
