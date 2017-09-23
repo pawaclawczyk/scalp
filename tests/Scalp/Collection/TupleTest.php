@@ -15,8 +15,8 @@ final class TupleTest extends TestCase
     {
         $pair = new Tuple('life', 42);
 
-        $this->assertEquals('life', $pair->__1);
-        $this->assertEquals(42, $pair->__2);
+        $this->assertEquals('life', $pair->_1);
+        $this->assertEquals(42, $pair->_2);
     }
 
     /** @test */
@@ -25,9 +25,9 @@ final class TupleTest extends TestCase
         $pair = new Tuple('life', 42);
 
         $this->expectException(NoSuchElementException::class);
-        $this->expectExceptionMessage('Tuple->__3');
+        $this->expectExceptionMessage('Tuple->_3');
 
-        $pair->__3;
+        $pair->_3;
     }
 
     /** @test */

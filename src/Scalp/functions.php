@@ -19,6 +19,27 @@ namespace Scalp {
         return $x;
     }
 
+    const concat = __NAMESPACE__.'\concat';
+
+    function concat(string ...$strings): string
+    {
+        return implode('', $strings);
+    }
+
+    const inc = __NAMESPACE__.'\inc';
+
+    function inc(int $x, int $step = 1): int
+    {
+        return $x + $step;
+    }
+
+    const throwE = __NAMESPACE__.'\throwE';
+
+    function throwE(string $class, string $message): void
+    {
+        throw new $class($message);
+    }
+
     const println = __NAMESPACE__.'\println';
 
     function println($x): void
@@ -65,7 +86,7 @@ namespace Scalp\Conversion {
 }
 
 namespace Scalp\Utils {
-    function Delayed(callable $functionOrCodeBlock, ...$args): Delayed
+    function delayed(callable $functionOrCodeBlock, ...$args): Delayed
     {
         return new Delayed($functionOrCodeBlock, ...$args);
     }

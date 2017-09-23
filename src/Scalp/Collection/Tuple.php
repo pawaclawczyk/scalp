@@ -4,9 +4,18 @@ declare(strict_types=1);
 
 namespace Scalp\Collection;
 
+use const Scalp\__;
 use Scalp\Exception\NoSuchElementException;
+use const Scalp\identity;
+use const Scalp\inc;
+use function Scalp\None;
+use Scalp\Option;
+use function Scalp\papply;
 use Scalp\PatternMatching\CaseClass;
 use Scalp\PatternMatching\Deconstruction;
+use function Scalp\Some;
+use const Scalp\throwE;
+use function Scalp\Utils\delayed;
 
 final class Tuple implements CaseClass
 {
@@ -16,9 +25,6 @@ final class Tuple implements CaseClass
 
     public function __construct(...$elements)
     {
-        /*
-         * @todo How to force this?
-         */
         $this->construct(...$elements);
 
         $this->elements = $elements;
@@ -26,18 +32,25 @@ final class Tuple implements CaseClass
 
     public function __get($name)
     {
-        preg_match('/^__(\d+)$/', $name, $matches);
+        return $this
+            ->elementId($name)
+            ->map(papply(inc, __, -1))
+            ->flatMap(\Closure::fromCallable([$this, 'element']))
+            ->fold(
+                delayed(throwE, NoSuchElementException::class, "Tuple->$name"),
+                identity
+            );
+    }
 
-        if (!isset($matches[1])) {
-            throw new NoSuchElementException("Tuple->$name");
-        }
+    private function elementId(string $propertyName): Option
+    {
+        preg_match('/^_(\d+)$/', $propertyName, $matches);
 
-        $element = $matches[1] - 1;
+        return isset($matches[1]) ? Some((int) $matches[1]) : None();
+    }
 
-        if (!isset($this->elements[$element])) {
-            throw new NoSuchElementException("Tuple->$name");
-        }
-
-        return $this->elements[$element];
+    private function element(int $id): Option
+    {
+        return isset($this->elements[$id]) ? Some($this->elements[$id]) : None();
     }
 }

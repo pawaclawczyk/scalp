@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Scalp\Tests\Utils;
 
 use Scalp\Utils\Delayed;
-use function Scalp\Utils\Delayed;
+use function Scalp\Utils\delayed;
 use PHPUnit\Framework\TestCase;
 
 class DelayedTest extends TestCase
@@ -53,7 +53,7 @@ class DelayedTest extends TestCase
             return $x * $x;
         };
 
-        $delayed = Delayed($function, 2);
+        $delayed = delayed($function, 2);
 
         $this->assertEquals(4, $delayed());
     }

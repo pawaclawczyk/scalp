@@ -63,7 +63,7 @@ final class Success extends TryCatch
 
     public function map(callable $f): TryCatch
     {
-        return TryCatch(Delayed($f, $this->value));
+        return TryCatch(delayed($f, $this->value));
     }
 
     public function filter(callable $p): TryCatch
