@@ -6,6 +6,7 @@ namespace Scalp\Tests;
 
 use PHPUnit\Framework\TestCase;
 use const Scalp\__;
+use const Scalp\concat;
 use function Scalp\papply;
 use const Scalp\Tests\Type\sum;
 
@@ -158,5 +159,13 @@ final class PartialApplicationTest extends TestCase
         $this->expectExceptionMessage('Partially applied function has 2 missing arguments at position: 1, 2.');
 
         $partiallyAppliedF();
+    }
+
+    /** @test */
+    public function it_allows_values_and_placeholders_to_be_on_random_positions(): void
+    {
+        $f = papply(concat, 'It', __, ' values and', __, ' to be on', ' random', __);
+
+        $this->assertEquals('It allows values and placeholders to be on random positions.', $f(' allows', ' placeholders', ' positions.'));
     }
 }
