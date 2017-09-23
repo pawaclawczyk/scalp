@@ -14,7 +14,7 @@ use function Scalp\papply;
 use function Scalp\PatternMatching\match;
 use function Scalp\PatternMatching\Type;
 use function Scalp\Some;
-use function Scalp\Utils\delayed;
+use function Scalp\Utils\delay;
 use function Scalp\PatternMatching\Any;
 
 final class PatternMatchingTest extends TestCase
@@ -31,7 +31,7 @@ final class PatternMatchingTest extends TestCase
         $result = match($subject)
             ->case(
                 Type(Tuple::class, Type(None::class), Type(None::class)),
-                delayed(identity, 'No question, no answer.')
+                delay(identity, 'No question, no answer.')
             )
             ->case(
                 Type(Tuple::class, Any()->bind(), Any()->bind()),
@@ -39,7 +39,7 @@ final class PatternMatchingTest extends TestCase
             )
             ->case(
                 Any(),
-                delayed(identity, 'It does not work this way...')
+                delay(identity, 'It does not work this way...')
             )
             ->done();
 

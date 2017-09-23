@@ -11,7 +11,7 @@ use function Scalp\None;
 use Scalp\Option;
 use function Scalp\papply;
 use function Scalp\Some;
-use function Scalp\Utils\delayed;
+use function Scalp\Utils\delay;
 use const Scalp\Utils\Failure;
 use Scalp\Utils\TryCatch;
 
@@ -39,7 +39,7 @@ final class Type extends Pattern
         $caseClass = Some($x)
                 ->filter(papply(isInstanceOfType, __, CaseClass::class))
                 ->fold(
-                    delayed(Failure, new \RuntimeException('Argument must be CaseClass')),
+                    delay(Failure, new \RuntimeException('Argument must be CaseClass')),
                     Success
                 );
 

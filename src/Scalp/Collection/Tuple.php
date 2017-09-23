@@ -15,7 +15,7 @@ use Scalp\PatternMatching\CaseClass;
 use Scalp\PatternMatching\Deconstruction;
 use function Scalp\Some;
 use const Scalp\throwE;
-use function Scalp\Utils\delayed;
+use function Scalp\Utils\delay;
 
 final class Tuple implements CaseClass
 {
@@ -37,7 +37,7 @@ final class Tuple implements CaseClass
             ->map(papply(inc, __, -1))
             ->flatMap(\Closure::fromCallable([$this, 'element']))
             ->fold(
-                delayed(throwE, NoSuchElementException::class, "Tuple->$name"),
+                delay(throwE, NoSuchElementException::class, "Tuple->$name"),
                 identity
             );
     }

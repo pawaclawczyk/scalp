@@ -122,13 +122,14 @@ with name [Type]ToString.*
 
 ## Scalp\Utils
 ### Delayed
-The `Delayed` type represents function and its arguments without invoking the function.
-The inner function can be executed by invoking the `Delayed` wrapper.
+The `Delayed` type represents represents a postponed computation. It is created from a callable -- the computation and
+its run arguments. The `Delayed` type is callable type, when called it executes the postponed computation.
+In order to create delayed computation use factory method `dalay(callable $f, ...$args)`.
 
 ```php
-use function Scalp\Utils\Delayed;
+use function Scalp\Utils\delay;
 
-$delayed = Delayed(function (int $x): int { return $x * $x; }, 2);
+$delayed = delay(function (int $x): int { return $x * $x; }, 2);
 
 echo $delayed();
 ```
@@ -141,15 +142,15 @@ echo $delayed();
 The `TryCatch` type represents computation that may either result in an exception, or return successful value.
 
 ```php
-use function Scalp\Utils\Delayed;
+use function Scalp\Utils\delay;
 use function Scalp\Utils\TryCatch;
 
 $computation = function (int $divisor): int {
     return intdiv(42, $divisor);
 };
 
-$success = TryCatch(Delayed($computation, 7));
-$failure = TryCatch(Delayed($computation, 0));
+$success = TryCatch(delay($computation, 7));
+$failure = TryCatch(delay($computation, 0));
 
 echo "Success: $success\n";
 echo "Failure: $failure\n";
