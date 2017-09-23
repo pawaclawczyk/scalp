@@ -47,10 +47,14 @@ namespace Scalp {
         echo AnyToString($x)."\n";
     }
 
+    const None = __NAMESPACE__.'\None';
+
     function None(): None
     {
         return new None();
     }
+
+    const Some = __NAMESPACE__.'\Some';
 
     function Some($x): Some
     {
@@ -91,10 +95,14 @@ namespace Scalp\Utils {
         return new Delayed($functionOrCodeBlock, ...$args);
     }
 
+    const Failure = __NAMESPACE__.'\Failure';
+
     function Failure(\Throwable $error): Failure
     {
         return new Failure($error);
     }
+
+    const Success = __NAMESPACE__.'\Success';
 
     function Success($value): Success
     {
@@ -110,6 +118,13 @@ namespace Scalp\Utils {
         }
     }
 
+    const isInstanceOfType = __NAMESPACE__.'\isInstanceOfType';
+
+    function isInstanceOfType($value, string $type): bool
+    {
+        return checkType(type($value), $type);
+    }
+
     function type($x): string
     {
         return is_object($x)
@@ -117,6 +132,8 @@ namespace Scalp\Utils {
                 : gettype($x)
             ;
     }
+
+    const checkType = __NAMESPACE__.'\checkType';
 
     function checkType(string $actual, string $expected): bool
     {

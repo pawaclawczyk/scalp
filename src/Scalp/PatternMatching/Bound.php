@@ -21,6 +21,6 @@ final class Bound extends Pattern
     {
         return $this->inner
             ->match($x)
-            ->map(papply(array_merge, [$x], __));
+            ->map(papply('array_merge', [$x], __));
     }
 }
