@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scalp\PatternMatching;
 
+use Scalp\PatternMatching\Exception\PatternMatchingSubjectNotFound;
 use Scalp\PatternMatching\Pattern\Pattern;
 
 final class UnresolvedMatchSubject extends MatchSubject

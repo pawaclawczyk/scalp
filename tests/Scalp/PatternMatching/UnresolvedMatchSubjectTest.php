@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Scalp\Tests\PatternMatching;
 
 use Scalp\None;
-use Scalp\PatternMatching\PatternMatchingSubjectNotFound;
+use Scalp\PatternMatching\Exception\PatternMatchingSubjectNotFound;
 use function Scalp\PatternMatching\Type;
 use Scalp\PatternMatching\UnresolvedMatchSubject;
 use PHPUnit\Framework\TestCase;

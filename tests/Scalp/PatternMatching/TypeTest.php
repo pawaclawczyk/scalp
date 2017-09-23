@@ -7,6 +7,7 @@ namespace Scalp\Tests\PatternMatching;
 use function Scalp\None;
 use Scalp\PatternMatching\CaseClass;
 use Scalp\PatternMatching\Deconstruction;
+use Scalp\PatternMatching\Exception\InvalidPatternsNumber;
 use function Scalp\PatternMatching\Type;
 use PHPUnit\Framework\TestCase;
 use function Scalp\Some;
@@ -95,5 +96,15 @@ final class TypeTest extends TestCase
             )->bind()
                 ->match(new Subject(1, 2, 3))
         );
+    }
+
+    /** @test */
+    public function it_requires_patterns_for_all_constructor_arguments(): void
+    {
+        $this->expectException(InvalidPatternsNumber::class);
+        $this->expectExceptionMessage('Instance of type "Scalp\Tests\PatternMatching\Subject" was created with 2 arguments, but here is 1 patterns provided.');
+
+        Type(Subject::class, Type('integer'))
+            ->match(new Subject(1, 2));
     }
 }

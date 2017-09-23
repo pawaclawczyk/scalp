@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scalp\PatternMatching;
+namespace Scalp\PatternMatching\Exception;
 
 use function Scalp\Conversion\AnyToString;
 

@@ -6,6 +6,7 @@ namespace Scalp\PatternMatching\Pattern;
 
 use const Scalp\__;
 use Scalp\PatternMatching\CaseClass;
+use Scalp\PatternMatching\Exception\InvalidPatternsNumber;
 use const Scalp\Utils\isInstanceOfType;
 use const Scalp\Utils\Success;
 use function Scalp\None;
@@ -15,6 +16,7 @@ use function Scalp\Some;
 use function Scalp\Utils\delay;
 use const Scalp\Utils\Failure;
 use Scalp\Utils\TryCatch;
+use function Scalp\Utils\type;
 
 final class Type extends Pattern implements Binding
 {
@@ -48,18 +50,26 @@ final class Type extends Pattern implements Binding
 
         return $caseClass
                 ->map(function (CaseClass $cc): array { return $cc->deconstruct(); })
-                ->map(papply(\Closure::fromCallable([$this, 'applyConstructorArgumentsPatterns']), __, $this->patterns))
+                ->map(papply(\Closure::fromCallable([$this, 'applyConstructorArgumentsPatterns']), type($x), __, $this->patterns))
                 ->get();
     }
 
     /**
+     * @param string    $type
      * @param array     $arguments
      * @param Pattern[] $patterns
      *
      * @return Option
      */
-    private function applyConstructorArgumentsPatterns(array $arguments, array $patterns): Option
+    private function applyConstructorArgumentsPatterns(string $type, array $arguments, array $patterns): Option
     {
+        $argumentsNumber = \count($arguments);
+        $patternsNumber = \count($patterns);
+
+        if ($argumentsNumber !== $patternsNumber) {
+            throw InvalidPatternsNumber::create($type, $argumentsNumber, $patternsNumber);
+        }
+
         $currentPattern = 0;
 
         $values = [];
