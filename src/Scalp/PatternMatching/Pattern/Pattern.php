@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scalp\PatternMatching;
+namespace Scalp\PatternMatching\Pattern;
 
 use Scalp\Option;
 

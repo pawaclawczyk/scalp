@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 namespace Scalp\PatternMatching {
+    use Scalp\PatternMatching\Pattern\Any;
+    use Scalp\PatternMatching\Pattern\Type;
+    use Scalp\PatternMatching\Pattern\Value;
+
     function match($x): MatchSubject
     {
         return new UnresolvedMatchSubject($x);

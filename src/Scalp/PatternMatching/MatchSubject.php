@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scalp\PatternMatching;
 
+use Scalp\PatternMatching\Pattern\Pattern;
+
 abstract class MatchSubject
 {
     private $x;

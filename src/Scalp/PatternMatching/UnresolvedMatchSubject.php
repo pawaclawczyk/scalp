@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scalp\PatternMatching;
 
+use Scalp\PatternMatching\Pattern\Pattern;
+
 final class UnresolvedMatchSubject extends MatchSubject
 {
     public function case(Pattern $pattern, callable $handler): MatchSubject

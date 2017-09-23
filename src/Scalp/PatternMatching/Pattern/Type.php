@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Scalp\PatternMatching;
+namespace Scalp\PatternMatching\Pattern;
 
 use const Scalp\__;
+use Scalp\PatternMatching\CaseClass;
 use const Scalp\Utils\isInstanceOfType;
 use const Scalp\Utils\Success;
 use function Scalp\None;
@@ -15,8 +16,10 @@ use function Scalp\Utils\delay;
 use const Scalp\Utils\Failure;
 use Scalp\Utils\TryCatch;
 
-final class Type extends Pattern
+final class Type extends Pattern implements Binding
 {
+    use Bind;
+
     private $type;
     private $patterns;
 
@@ -47,11 +50,6 @@ final class Type extends Pattern
                 ->map(function (CaseClass $cc): array { return $cc->deconstruct(); })
                 ->map(papply(\Closure::fromCallable([$this, 'applyConstructorArgumentsPatterns']), __, $this->patterns))
                 ->get();
-    }
-
-    public function bind()
-    {
-        return new Bound($this);
     }
 
     /**
