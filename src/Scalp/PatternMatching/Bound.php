@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Scalp\PatternMatching;
 
-use Scalp\None;
+use const Scalp\__;
 use Scalp\Option;
-use function Scalp\Some;
+use function Scalp\papply;
 
 final class Bound extends Pattern
 {
@@ -19,14 +19,8 @@ final class Bound extends Pattern
 
     public function match($x): Option
     {
-        $result = $this->inner->match($x);
-
-        if ($result instanceof None) {
-            return $result;
-        }
-
-        $args = array_merge([$x], $result->get());
-
-        return Some($args);
+        return $this->inner
+            ->match($x)
+            ->map(papply(array_merge, [$x], __));
     }
 }
