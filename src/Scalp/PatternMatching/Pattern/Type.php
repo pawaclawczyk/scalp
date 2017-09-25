@@ -36,12 +36,12 @@ final class Type extends Pattern implements Binding
         $typeMatch = Some($x)
             ->filter(papply(isInstanceOfType, __, $this->type));
 
-        if (empty($this->patterns)) {
+        if ($typeMatch->isEmpty() || empty($this->patterns)) {
             return $typeMatch->flatMap(function (): Option { return Some([]); });
         }
 
         /** @var TryCatch $caseClass */
-        $caseClass = Some($x)
+        $caseClass = $typeMatch
                 ->filter(papply(isInstanceOfType, __, CaseClass::class))
                 ->fold(
                     delay(Failure, new \RuntimeException('Argument must be CaseClass')),

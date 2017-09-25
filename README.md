@@ -120,6 +120,55 @@ Implicit conversion should have name following convention `[TypeA]To[TypeB]`.
 In example in case of conversions able to convert value of some type to string, `AnyToString` will look for functions 
 with name [Type]ToString.*
 
+## Scalp\PatternMatching
+```php
+abstract class Notification implements CaseClass {};
+
+final class Email extends Notification
+{
+    public function __construct(string $sender, string $title, string $body) { ... }
+}
+
+final class SMS extends Notification
+{
+    public function __construct(string $caller, string $message) { ... }
+}
+
+final class VoiceRecording extends Notification
+{
+    public function __construct(string $contactName, string $link) { ... }
+}
+
+function showNotification(Notification $notification): string
+{
+    return match($notification)
+        ->case(
+            Type(Email::class, Type('string')->bind(), Type('string')->bind(), Any()),
+            papply(concat, 'You got an email from ', __, 'with title: ', __)
+        )
+        ->case(
+            Type(SMS::class, Type('string')->bind(), Type('string')->bind()),
+            papply(concat, 'You got an SMS from ', __, '! Message: ', __)
+        )
+        ->case(
+            Type(VoiceRecording::class, Type('string')->bind(), Type('string')->bind()),
+            papply(concat, 'You received a Voice Recording from ', __, '! Click the link to hear it: ', __)
+        )
+        ->done();
+}
+
+$someSms = new SMS('12345', 'Are you there?');
+$someVoiceRecording = new VoiceRecording('Tom', 'voicerecording.org/id/123');
+
+println(showNotification($someSms));
+println(showNotification($someVoiceRecording));
+```
+
+```
+You got an SMS from 12345! Message: Are you there?
+You received a Voice Recording from Tom! Click the link to hear it: voicerecording.org/id/123
+```
+
 ## Scalp\Utils
 ### Delayed
 The `Delayed` type represents represents a postponed computation. It is created from a callable -- the computation and

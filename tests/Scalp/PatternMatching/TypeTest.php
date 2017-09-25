@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scalp\Tests\PatternMatching;
 
+use Scalp\Collection\Tuple;
 use function Scalp\None;
 use Scalp\PatternMatching\CaseClass;
 use Scalp\PatternMatching\Deconstruction;
@@ -106,5 +107,15 @@ final class TypeTest extends TestCase
 
         Type(Subject::class, Type('integer'))
             ->match(new Subject(1, 2));
+    }
+
+    /** @test */
+    public function it_returns_none_when_type_does_not_match_without_matching_argument_patterns(): void
+    {
+        $this->assertEquals(
+            None(),
+            Type(Tuple::class, Any(), Any(), Any())
+                ->match(new Subject(1))
+        );
     }
 }
