@@ -41,7 +41,17 @@ final class ValueTest extends TestCase
     }
 
     /** @test */
-    public function it_matches_values_of_complex_types_in_a_soft_way(): void
+    public function it_does_not_match_values_of_complex_types_when_its_properties_do_not_match(): void
+    {
+        $this->assertInstanceOf(
+            None::class,
+            Value(Some(42))
+                ->match(Value(13))
+        );
+    }
+
+    /** @test */
+    public function it_matches_values_of_complex_types_using_loose_comparison_for_its_properties(): void
     {
         $this->assertInstanceOf(
             Some::class,

@@ -121,6 +121,136 @@ In example in case of conversions able to convert value of some type to string, 
 with name [Type]ToString.*
 
 ## Scalp\PatternMatching
+Pattern matching is mechanism for checking value against a pattern. You can think of it as of advanced switch statement.
+In opposition to `switch` and `if` statements, pattern matching is an expression (it returns value, like ternary operator `?:`).
+General use of pattern matching expression:
+
+```php
+$result = match($subject)
+    ->case($pattern1, $callableToRunForPattern1)
+    ->case($pattern2, $callableToRunForPattern2)
+    ...
+    ->case($patternN, $callableToRunForPatternN)
+    ->done();
+```
+
+Case patterns are checked in order of declaration. When more general pattern is declared before specific one,
+it will always fall into the general case.
+
+### Case classes and type deconstruction
+`CaseClass` is an interface that ensures existing of `deconstruct` method. `Deconstruct` method should return arguments
+used to construct instance of given type. You can use trait `Deconstruction` to provide the ability to deconstruct.
+It enables pattern matching to compare immutable complex type values.
+
+In example the `Option` type is implemented as case class.
+
+```php
+abstract class Option implements CaseClass
+{
+    use Deconstruction;
+
+    ...
+}
+
+final class Some extends Option
+{
+    private $value;
+
+    public function __construct($value)
+    {
+        $this->construct($value);
+
+        $this->value = $value;
+    }
+
+    ...
+}
+
+```
+
+### Patterns
+The most basic pattern is `Any`, it will match anything.
+```php
+$res0 = match(42)
+    ->case(Any(), function (): string { return 'Anything'; })
+    ->done();
+
+// $res0 === 'Anything'
+
+$res1 = match(Some(42))
+    ->case(Any(), function (): string { return 'Anything'; })
+    ->done();
+
+// $res1 === 'Anything'
+```
+
+`Value` pattern does regular comparison with `===` for primitive types or `==` for objects.
+When loose comparison is used, objects properties are also compared with `==` (see 3rd example).
+
+```php
+$res2 = match(42)
+    ->case(Value(13), function (): string { return 'Number 13'; })
+    ->case(Value('42'), function (): string { return 'String "42"'; })
+    ->case(Value(42), function (): string { return 'Number 42'; })
+    ->case(Any(), function (): string { return 'Fallback'; })
+    ->done();
+
+// $res2 === 'Number 42'
+
+$res3 = match(Some(42))
+    ->case(Value(Some(13)), function (): string { return 'Some 13'; })
+    ->case(Value(Some(42)), function (): string { return 'Some 42'; })
+    ->case(Any(), function (): string { return 'Fallback'; })
+    ->done();
+
+// $res3 === 'Some 42'
+
+$res4 = match(Some(42))
+    ->case(Value(Some('42')), function (): string { return 'Some 42'; })
+    ->case(Any(), function (): string { return 'Fallback'; })
+    ->done();
+
+// $res4 === 'Some 42'
+```
+
+The `Type` can be used as simple pattern that checks value type.
+```php
+$res5 = match(42)
+    ->case(Type('string'), function (): string { return 'String'; })
+    ->case(Type('integer'), function (): string { return 'Integer'; })
+    ->case(Any(), function (): string { return 'Not integer'; })
+    ->done();
+
+// $res5 === 'integer'
+
+$res6 = match(Some(42))
+    ->case(Type(None::class), function (): string { return 'None'; })
+    ->case(Type(Some::class), function (): string { return 'Some'; })
+    ->case(Any(), function (): string { return 'Neither'; })
+    ->done();
+
+// $res6 === 'Some'
+```
+
+`Type` pattern works with `CaseClass` deconstruction. It gives tha ability to look inside type construction
+and pattern match its arguments.
+
+```php
+$res7 = match(Some(42))
+    ->case(Type(Some::class, Value('42')), returnString('Inner value is string'))
+    ->case(Type(Some::class, Value(42)), returnString('Inner value is integer'))
+    ->case(Any(), returnString('Fallback'))
+    ->done();
+
+// $res7 === 'Inner value is integer'
+```
+
+### Value binding
+
+
+
+### Example
+
 ```php
 abstract class Notification implements CaseClass {};
 

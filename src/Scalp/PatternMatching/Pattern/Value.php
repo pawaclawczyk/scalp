@@ -20,7 +20,7 @@ final class Value extends Pattern
     public function match($x): Option
     {
         return is_object($x)
-            ? ($this->value == $x) ? Option([]) : None()
-            : ($this->value === $x) ? Option([]) : None();
+            ? ($this->value == $x ? Option([]) : None())
+            : ($this->value === $x ? Option([]) : None());
     }
 }
