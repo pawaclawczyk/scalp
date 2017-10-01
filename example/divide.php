@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-use function Scalp\Utils\Delayed;
+use function Scalp\Utils\delay;
 use function Scalp\Utils\TryCatch;
 use Scalp\Utils\TryCatch;
 
@@ -20,8 +20,8 @@ function readInt(string $prompt): int
     return intval($input);
 }
 
-$dividend = TryCatch(Delayed('readInt', "Enter an Int that you'd like to divide: "));
-$divisor = TryCatch(Delayed('readInt', "Enter an Int that you'd like to divide by: "));
+$dividend = TryCatch(delay('readInt', "Enter an Int that you'd like to divide: "));
+$divisor = TryCatch(delay('readInt', "Enter an Int that you'd like to divide by: "));
 
 $result = $dividend->flatMap(function (int $x) use ($divisor): TryCatch {
     return $divisor->map(function (int $y) use ($x) {

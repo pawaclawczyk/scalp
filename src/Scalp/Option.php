@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Scalp;
 
 use function Scalp\Conversion\AnyToString;
+use Scalp\PatternMatching\CaseClass;
+use Scalp\PatternMatching\Deconstruction;
 use function Scalp\Type\restrictCallableReturnType;
 use function Scalp\Utils\type;
 
-abstract class Option
+abstract class Option implements CaseClass
 {
+    use Deconstruction;
+
     abstract public function isEmpty(): bool;
 
     final public function isDefined(): bool

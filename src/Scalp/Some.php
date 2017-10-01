@@ -10,6 +10,8 @@ final class Some extends Option
 
     public function __construct($value)
     {
+        $this->construct($value);
+
         $this->value = $value;
     }
 
