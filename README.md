@@ -313,7 +313,7 @@ You received a Voice Recording from Tom! Click the link to hear it: voicerecordi
 
 ## Scalp\Utils
 ### Delayed
-The `Delayed` type represents represents a postponed computation. It is created from a callable -- the computation and
+The `Delayed` type represents a postponed computation. It is created from a callable -- the computation and
 its run arguments. The `Delayed` type is callable type, when called it executes the postponed computation.
 In order to create delayed computation use factory method `dalay(callable $f, ...$args)`.
 
