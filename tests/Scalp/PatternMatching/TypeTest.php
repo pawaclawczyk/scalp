@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scalp\Tests\PatternMatching;
 
-use Scalp\Collection\Tuple;
+use Scalp\Tuple;
 use function Scalp\None;
 use Scalp\PatternMatching\CaseClass;
 use Scalp\PatternMatching\Deconstruction;

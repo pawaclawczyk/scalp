@@ -73,6 +73,16 @@ namespace Scalp {
     {
         return new PartialApplication($f, $args);
     }
+
+    function Pair($_1, $_2): Tuple
+    {
+        return new Tuple($_1, $_2);
+    }
+
+    function Tuple(...$elements): Tuple
+    {
+        return new Tuple(...$elements);
+    }
 }
 
 namespace Scalp\Conversion {

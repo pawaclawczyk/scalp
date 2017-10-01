@@ -6,7 +6,8 @@ namespace Scalp\Tests\PatternMatching;
 
 use PHPUnit\Framework\TestCase;
 use const Scalp\__;
-use Scalp\Collection\Tuple;
+use function Scalp\Pair;
+use Scalp\Tuple;
 use const Scalp\Conversion\AnyToString;
 use const Scalp\identity;
 use Scalp\None;
@@ -26,7 +27,7 @@ final class PatternMatchingTest extends TestCase
             return implode('', array_map(AnyToString, $strings));
         };
 
-        $subject = new Tuple(Some('Life'), Some(42));
+        $subject = Pair(Some('Life'), Some(42));
 
         $result = match($subject)
             ->case(

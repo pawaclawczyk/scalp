@@ -92,6 +92,23 @@ Array(-2, 0, 2)
 Array()
 ```
 
+### Tuple
+
+`Tuple` is a data structure that holds elements of different types.
+`Pair` is factory function for `Tuple` with two elements.
+
+```php
+$singleton = Tuple(42);
+
+$pair      = Pair('Life', 42);
+
+$triple    = Tuple('text', 27, false);
+```
+
+`Tuple` exposes its elements by properties with names `_1`, `_2` to `_N`.
+
+_Elements of Tuple cannot be set._
+
 ## Scalp\Conversion
 ### AnyToString
 Converts any type to string. In case of value type looks for implicit conversion function and if not found casts to value string. 

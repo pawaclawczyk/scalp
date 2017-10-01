@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Scalp\Tests\PatternMatching;
 
 use PHPUnit\Framework\TestCase;
-use Scalp\Collection\Tuple;
+use function Scalp\Pair;
 use Scalp\None;
 use function Scalp\None;
 use function Scalp\PatternMatching\Value;
@@ -35,8 +35,8 @@ final class ValueTest extends TestCase
     {
         $this->assertInstanceOf(
             Some::class,
-            Value(new Tuple(Some(42), Some(None())))
-                ->match(new Tuple(Some(42), Some(None())))
+            Value(Pair(Some(42), Some(None())))
+                ->match(Pair(Some(42), Some(None())))
         );
     }
 
@@ -55,8 +55,8 @@ final class ValueTest extends TestCase
     {
         $this->assertInstanceOf(
             Some::class,
-            Value(new Tuple(Some(42), Some(None())))
-                ->match(new Tuple(Some('42'), Some(None())))
+            Value(Pair(Some(42), Some(None())))
+                ->match(Pair(Some('42'), Some(None())))
         );
     }
 }

@@ -12,9 +12,10 @@ use function Scalp\PatternMatching\Type;
 use function Scalp\concat;
 use function Scalp\println;
 use function Scalp\Some;
+use function Scalp\Pair;
 use Scalp\None;
 use Scalp\Some;
-use Scalp\Collection\Tuple;
+use Scalp\Tuple;
 
 function returnString(string $s): callable
 {
@@ -84,7 +85,7 @@ $res7 = match(Some(42))
 
 println($res7);
 
-$res8 = match(new Tuple('2 * 7 = ', 14))
+$res8 = match(Pair('2 * 7 = ', 14))
     ->case(
         Type(Tuple::class, Any()->bind(), Any()->bind()),
         function (string $question, int $answer): string { return concat('Solution: ', $question, AnyToString($answer)); }

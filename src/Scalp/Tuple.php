@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Scalp\Collection;
+namespace Scalp;
 
 use const Scalp\__;
 use Scalp\Exception\NoSuchElementException;
 use const Scalp\identity;
 use const Scalp\inc;
 use function Scalp\None;
-use Scalp\Option;
 use function Scalp\papply;
 use Scalp\PatternMatching\CaseClass;
 use Scalp\PatternMatching\Deconstruction;
@@ -25,6 +24,10 @@ final class Tuple implements CaseClass
 
     public function __construct(...$elements)
     {
+        if (\count($elements) === 0) {
+            throw new \InvalidArgumentException('Tuple must by construct with at least one element.');
+        }
+
         $this->construct(...$elements);
 
         $this->elements = $elements;
