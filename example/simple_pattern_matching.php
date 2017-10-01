@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+use function Scalp\Conversion\AnyToString;
 use function Scalp\PatternMatching\match;
 use function Scalp\PatternMatching\Any;
 use function Scalp\PatternMatching\Value;
 use function Scalp\PatternMatching\Type;
+use function Scalp\concat;
 use function Scalp\println;
 use function Scalp\Some;
 use Scalp\None;
 use Scalp\Some;
+use Scalp\Collection\Tuple;
 
 function returnString(string $s): callable
 {
@@ -80,3 +83,13 @@ $res7 = match(Some(42))
     ->done();
 
 println($res7);
+
+$res8 = match(new Tuple('2 * 7 = ', 14))
+    ->case(
+        Type(Tuple::class, Any()->bind(), Any()->bind()),
+        function (string $question, int $answer): string { return concat('Solution: ', $question, AnyToString($answer)); }
+    )
+    ->case(Any(), returnString('Fallback'))
+    ->done();
+
+println($res8);

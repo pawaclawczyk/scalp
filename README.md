@@ -247,7 +247,19 @@ $res7 = match(Some(42))
 
 ### Value binding
 
+Every value matched by a pattern can be bound and used as handler argument.
 
+```php
+$res8 = match(new Tuple('2 * 7 = ', 14))
+    ->case(
+        Type(Tuple::class, Any()->bind(), Any()->bind()),
+        function (string $question, int $answer): string { return concat('Solution: ', $question, AnyToString($answer)); }
+    )
+    ->case(Any(), returnString('Fallback'))
+    ->done();
+
+// $res8 === 'Solution: 2 * 7 = 14'
+```
 
 ### Example
 
