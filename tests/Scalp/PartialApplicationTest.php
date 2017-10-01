@@ -165,7 +165,9 @@ final class PartialApplicationTest extends TestCase
     public function it_allows_values_and_placeholders_to_be_on_random_positions(): void
     {
         $f = papply(concat, 'It', __, ' values and', __, ' to be on', ' random', __);
+        $g = papply(concat, __, ' allows', __, ' placeholders', __, __, ' positions.');
 
         $this->assertEquals('It allows values and placeholders to be on random positions.', $f(' allows', ' placeholders', ' positions.'));
+        $this->assertEquals('It allows values and placeholders to be on random positions.', $g('It', ' values and', ' to be on', ' random'));
     }
 }
