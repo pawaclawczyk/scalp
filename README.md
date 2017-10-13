@@ -68,6 +68,27 @@ None
 None
 ```
 
+### Function Currying
+Function currying allows to use function as a function of lower arity by providing arguments in separated steps.
+
+```php
+use function Scalp\curry;
+use function Scalp\println;
+
+$match = curry('preg_match');
+
+$containsFoo = $match('/foo/');
+$containsBar = $match('/bar/');
+
+println($containsFoo('foobar'));   // 1
+println($containsFoo('foofoo'));   // 1
+println($containsFoo('barbar'));   // 0
+
+println($containsBar('foobar'));   // 1
+println($containsBar('foofoo'));   // 0
+println($containsBar('barbar'));   // 1
+```
+
 ### Partial Function Application
 Partial function application lets to apply some of function arguments immediately, while rest of them can be applied later.
 

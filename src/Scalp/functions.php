@@ -83,6 +83,16 @@ namespace Scalp {
     {
         return new Tuple(...$elements);
     }
+
+    function curry(callable $f): callable
+    {
+        return CurriedFunction::lift($f);
+    }
+
+    function curryN(callable $f, int $arity): callable
+    {
+        return CurriedFunction::liftN($f, $arity);
+    }
 }
 
 namespace Scalp\Conversion {
