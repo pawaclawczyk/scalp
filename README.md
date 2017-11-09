@@ -159,7 +159,7 @@ In example in case of conversions able to convert value of some type to string, 
 with name [Type]ToString.*
 
 ## Scalp\PatternMatching
-Pattern matching is mechanism for checking value against a pattern. You can think of it as of advanced switch statement.
+Pattern matching is a mechanism for checking value against a pattern. You can think of it as of advanced switch statement.
 In opposition to `switch` and `if` statements, pattern matching is an expression (it returns value, like ternary operator `?:`).
 General use of pattern matching expression:
 

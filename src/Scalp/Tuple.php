@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scalp;
 
 use const Scalp\__;
+use function Scalp\Conversion\AnyToString;
 use Scalp\Exception\NoSuchElementException;
 use const Scalp\identity;
 use const Scalp\inc;
@@ -55,5 +56,12 @@ final class Tuple implements CaseClass
     private function element(int $id): Option
     {
         return isset($this->elements[$id]) ? Some($this->elements[$id]) : None();
+    }
+
+    public function __toString(): string
+    {
+        $elements = \array_map(function ($elem): string { return AnyToString($elem); }, $this->elements);
+
+        return sprintf('Tuple(%s)', \implode(', ', $elements));
     }
 }
