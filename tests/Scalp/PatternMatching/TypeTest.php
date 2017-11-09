@@ -99,7 +99,7 @@ final class TypeTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_match_when_number_of_constructor_arguments_patterns_does_not_match_the_number_of_constructor_arguments(): void
+    public function it_does_not_match_if_number_of_argument_patterns_is_different_than_number_of_used_arguments(): void
     {
         $this->assertEquals(
             None(),
