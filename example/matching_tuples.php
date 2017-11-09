@@ -21,7 +21,12 @@ function tupleName(Tuple $tuple): string
         ->done();
 }
 
-//println(tupleName(Tuple(1, 2)));
-println(tupleName(Tuple(1)));
-//println(tupleName(Tuple(1, 2, 3, 4)));
-//println(tupleName(Tuple(1, 2, 3)));
+$singleton = Tuple(1);
+$pair = Tuple(1, 2);
+$triple = Tuple(1, 2, 3);
+$otherTuple = Tuple(1, 2, 3, 4);
+
+println($pair); println(tupleName($pair));
+println($singleton); println(tupleName($singleton));
+println($otherTuple); println(tupleName($otherTuple));
+println($triple); println(tupleName($triple));

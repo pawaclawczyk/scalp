@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scalp\Tests\Collection;
 
 use function Scalp\Pair;
+use function Scalp\Some;
 use function Scalp\Tuple;
 use PHPUnit\Framework\TestCase;
 use Scalp\Exception\NoSuchElementException;
@@ -49,5 +50,14 @@ final class TupleTest extends TestCase
         $this->expectExceptionMessage('Tuple must by construct with at least one element.');
 
         Tuple();
+    }
+
+    /** @test */
+    public function it_converts_to_string(): void
+    {
+        $this->assertEquals(
+            'Tuple(42, true, hello, Some[integer](1764))',
+            (string) Tuple(42, true, 'hello', Some(1764))
+        );
     }
 }

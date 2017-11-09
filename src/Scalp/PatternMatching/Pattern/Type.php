@@ -6,7 +6,6 @@ namespace Scalp\PatternMatching\Pattern;
 
 use const Scalp\__;
 use Scalp\PatternMatching\CaseClass;
-use Scalp\PatternMatching\Exception\InvalidPatternsNumber;
 use const Scalp\Utils\isInstanceOfType;
 use const Scalp\Utils\Success;
 use function Scalp\None;
@@ -67,7 +66,7 @@ final class Type extends Pattern implements Binding
         $patternsNumber = \count($patterns);
 
         if ($argumentsNumber !== $patternsNumber) {
-            throw InvalidPatternsNumber::create($type, $argumentsNumber, $patternsNumber);
+            return None();
         }
 
         $currentPattern = 0;
